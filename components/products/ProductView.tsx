@@ -1,5 +1,6 @@
 import { Product } from "@/lib/prisma";
 import ImageCarousel from "@/components/products/ImageCarousel";
+import { Button } from "@/components/ui/button";
 
 function ProductView({
   product,
@@ -14,7 +15,7 @@ function ProductView({
         <div className="w-full md:w-1/3">
           <ImageCarousel images={product.images || []} cldName={cldName} />
         </div>
-        <div className="w-full md:w-2/3 lg:pl-10">
+        <div className="w-full md:w-1/3 lg:pl-10">
           <p className="text-lg text-gray-600 mb-2 font-semibold">
             {product.category}
           </p>
@@ -29,6 +30,7 @@ function ProductView({
               </p>
             )}
           </div>
+          <Button className="w-36 text-xl">Buy Now</Button>
         </div>
       </div>
     </div>
