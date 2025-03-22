@@ -43,9 +43,9 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col space-mono`}
       >
-        <SpeedInsights />
         <CustomNavBar />
         {children}
+        <SpeedInsights />
       </body>
     </html>
   );
