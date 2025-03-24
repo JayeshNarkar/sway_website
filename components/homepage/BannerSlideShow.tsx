@@ -98,7 +98,9 @@ function BannerSlideShow({
       <a href={banners[currentIndex].url}>
         <img
           src={`https://res.cloudinary.com/${cldName}/image/upload/q_auto/f_auto/${
-            isDesktop ? "c_pad,ar_16:5,g_center,b_gen_fill/" : ""
+            isDesktop
+              ? "c_pad,ar_16:5,g_center,b_gen_fill/"
+              : "c_pad,ar_4:5,g_center,b_gen_fill/"
           }${banners[currentIndex].image.url}`}
           alt={`Banner ${currentIndex + 1}`}
           className="max-w-full max-h-full object-contain"
