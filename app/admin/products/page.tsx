@@ -1,9 +1,12 @@
 import AddBannerForm from "@/components/admin/banner/AddBannerForm";
 import EditBannersPage from "@/components/admin/banner/EditBannersPage";
 import EditProductPage from "@/components/admin/products/EditProductPage";
-import ProductForm from "@/components/admin/products/ProductForm";
+import AddProductForm from "@/components/admin/products/AddProductForm";
 import ProductViewsPage from "@/components/admin/products/ProductViewsPage";
 import React from "react";
+import AddCategoryForm from "@/components/admin/category/AddCategoryForm";
+import EditCategoryPage from "@/components/admin/category/EditCategoryPage";
+import EditProductStock from "@/components/admin/productStock/EditProductStock";
 
 function Products() {
   return (
@@ -13,9 +16,23 @@ function Products() {
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         <div className="p-4 border rounded shadow">
+          <h2 className="text-xl font-semibold mb-2">Add Category</h2>
+          <div className="bg-gray-100 p-4 flex items-center justify-center flex-col rounded">
+            <AddCategoryForm />
+          </div>
+        </div>
+
+        <div className="p-4 border rounded shadow">
+          <h2 className="text-xl font-semibold mb-2">Edit Categories</h2>
+          <div className="bg-gray-100 p-4 flex items-center justify-center flex-col rounded">
+            <EditCategoryPage />
+          </div>
+        </div>
+
+        <div className="p-4 border rounded shadow">
           <h2 className="text-xl font-semibold mb-2">Add Product</h2>
           <div className="bg-gray-100 p-4 flex items-center justify-center flex-col rounded">
-            <ProductForm />
+            <AddProductForm />
           </div>
         </div>
 
@@ -23,6 +40,13 @@ function Products() {
           <h2 className="text-xl font-semibold mb-2">Edit Product</h2>
           <div className="bg-gray-100 p-4 flex items-center justify-center flex-col rounded">
             <EditProductPage />
+          </div>
+        </div>
+
+        <div className="p-4 border rounded shadow">
+          <h2 className="text-xl font-semibold mb-2">Edit Product Stock</h2>
+          <div className="bg-gray-100 p-4 flex items-center justify-center flex-col rounded">
+            <EditProductStock />
           </div>
         </div>
 

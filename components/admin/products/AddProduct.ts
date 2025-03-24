@@ -1,8 +1,8 @@
 "use server";
 
 import { v2 as cloudinary } from "cloudinary";
-import { prisma } from "@/lib/prisma"; // Adjust the import path as needed
-import { FormSchemaType } from "./ProductForm";
+import { prisma } from "@/lib/prisma";
+import { FormSchemaType } from "./AddProductForm";
 import { revalidatePath } from "next/cache";
 
 const cld_api_key = process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY;
@@ -40,6 +40,17 @@ export async function onSubmit(values: FormSchemaType, images: File[]) {
       price: Number(values.price),
     };
 
+    const categoryExists = await prisma.category.findUnique({
+      where: { name: parsedValues.category },
+    });
+
+    if (!categoryExists) {
+      return {
+        status: 400,
+        message: `Category "${parsedValues.category}" does not exist. Please create the category first.`,
+      };
+    }
+
     const uploadResults = await Promise.all(
       images.map((image) => uploadToCloudinary(image))
     );
@@ -48,7 +59,7 @@ export async function onSubmit(values: FormSchemaType, images: File[]) {
       data: {
         name: parsedValues.productName.trim(),
         price: parsedValues.price,
-        category: parsedValues.category,
+        categoryName: parsedValues.category,
         images: {
           create: uploadResults.map((result) => ({
             url: result.public_id,
@@ -56,16 +67,17 @@ export async function onSubmit(values: FormSchemaType, images: File[]) {
         },
       },
     });
+
     revalidatePath("/admin/products");
     return {
       status: 200,
-      message: "Added successfully!",
+      message: "Product added successfully!",
     };
   } catch (error) {
     console.log(error);
     return {
       status: 500,
-      message: "Error occurered. message admin :(",
+      message: "An error occurred. Please contact the admin.",
     };
   }
 }

@@ -12,7 +12,6 @@ function Footer() {
             <p className="ml-4 text-gray-600 text-base">Wear The Chaos</p>
           </div>
 
-          {/* Social Media Links */}
           <div className="flex space-x-6 mt-4 md:mt-0">
             <a
               href="https://www.instagram.com/sway.cult"

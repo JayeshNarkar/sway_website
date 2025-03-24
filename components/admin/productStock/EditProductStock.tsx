@@ -1,17 +1,17 @@
-import { viewsProductFetch } from "@/components/admin/products/ProductFetch";
+import { productFetchWithStock } from "@/components/admin/products/ProductFetch";
 import getCldName from "@/lib/getCldName";
-import ProductViewsForm from "@/components/admin/products/ProductViewsForm";
 import { Product } from "@/lib/prisma";
+import EditProductStockForm from "@/components/admin/productStock/EditProductStockForm";
 
-async function ProductViewsPage() {
-  const products = await viewsProductFetch();
+async function EditProductPage() {
+  const products = await productFetchWithStock();
   const cldName = getCldName();
   return (
-    <div className="overflow-x-auto whitespace-nowrap max-w-full">
+    <div className="overflow-x-auto whitespace-nowrap  max-w-full">
       <div className="flex space-x-4 overflow-scroll">
         {products ? (
           products.map((product) => (
-            <ProductViewsForm
+            <EditProductStockForm
               key={product.id}
               product={product as Product}
               cldName={cldName}
@@ -24,4 +24,5 @@ async function ProductViewsPage() {
     </div>
   );
 }
-export default ProductViewsPage;
+
+export default EditProductPage;

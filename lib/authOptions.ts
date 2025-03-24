@@ -27,7 +27,6 @@ const authOptions: NextAuthOptions = {
 
       const existingUser = await prisma.user.findUnique({
         where: { email: profile.email },
-        cacheStrategy: { ttl: 60 },
       });
 
       if (!existingUser) {
@@ -41,7 +40,6 @@ const authOptions: NextAuthOptions = {
     async session({ session, token }) {
       const user = await prisma.user.findUnique({
         where: { email: token.email as string },
-        cacheStrategy: { ttl: 60 },
       });
       if (session && session.user) {
         session.user.isAdmin = user?.isAdmin as boolean;
@@ -54,7 +52,6 @@ const authOptions: NextAuthOptions = {
           where: {
             email: profile.email,
           },
-          cacheStrategy: { ttl: 60 },
         });
         if (!user) {
           throw new Error("No user found");

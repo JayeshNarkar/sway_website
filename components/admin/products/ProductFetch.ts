@@ -2,6 +2,14 @@
 
 import { prisma } from "@/lib/prisma";
 
+async function productFetchWithStock() {
+  return await prisma.product.findMany({
+    include: {
+      images: true,
+      stock: true,
+    },
+  });
+}
 async function productFetch() {
   return await prisma.product.findMany({
     include: {
@@ -33,4 +41,4 @@ async function viewsProductFetch() {
   return sortedProducts;
 }
 
-export { productFetch, viewsProductFetch };
+export { productFetch, viewsProductFetch, productFetchWithStock };

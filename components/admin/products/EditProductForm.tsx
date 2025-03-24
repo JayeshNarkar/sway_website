@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { removeProduct } from "@/components/admin/products/removeProduct";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -22,6 +22,7 @@ import {
 import { Product } from "@/lib/prisma";
 import { Label } from "@/components/ui/label";
 import getCloudinaryImageUrl from "@/lib/getCloudinaryImageUrl";
+import { getCategory } from "@/components/admin/category/getCategory";
 
 interface EditProductFormProps {
   product: Product;
@@ -31,10 +32,13 @@ interface EditProductFormProps {
 function EditProductForm({ product, cldName }: EditProductFormProps) {
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [categories, setCategories] = useState<{ id: number; name: string }[]>(
+    []
+  );
   const [formData, setFormData] = useState({
     name: product.name,
     price: product.price,
-    category: product.category,
+    category: product.categoryName,
     originalPrice: product.originalPrice > 0 ? product.originalPrice : -1,
     setDiscount: product.originalPrice > 0,
   });
@@ -43,6 +47,20 @@ function EditProductForm({ product, cldName }: EditProductFormProps) {
   );
 
   const router = useRouter();
+
+  // Fetch categories on component mount
+  useEffect(() => {
+    async function fetchCategories() {
+      try {
+        const fetchedCategories = await getCategory();
+        setCategories(fetchedCategories);
+      } catch (error) {
+        console.error("Failed to fetch categories:", error);
+        setErrorMessage("Failed to fetch categories");
+      }
+    }
+    fetchCategories();
+  }, []);
 
   return (
     <div
@@ -73,10 +91,6 @@ function EditProductForm({ product, cldName }: EditProductFormProps) {
             }
             disabled={loading}
           />
-          {/* <p className="text-wrap text-gray-500 text-xs">
-            This is the price that will be shown as the price before discount.
-            (Don't make "original price" lower than "price")
-          </p> */}
         </div>
       )}
       <p className="mb-2">
@@ -129,9 +143,11 @@ function EditProductForm({ product, cldName }: EditProductFormProps) {
           <SelectValue placeholder="Select a category" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="Upperwear">Upperwear</SelectItem>
-          <SelectItem value="Lowerwear">Lowerwear</SelectItem>
-          <SelectItem value="Other">Other</SelectItem>
+          {categories.map((category) => (
+            <SelectItem key={category.id} value={category.name}>
+              {category.name}
+            </SelectItem>
+          ))}
         </SelectContent>
       </Select>
 

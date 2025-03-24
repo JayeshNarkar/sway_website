@@ -68,7 +68,7 @@ async function editProduct(
       data: {
         name: formData.name,
         price: formData.price,
-        category: formData.category,
+        categoryName: formData.category,
         originalPrice: formData.setDiscount ? formData.originalPrice : -1,
       },
     });

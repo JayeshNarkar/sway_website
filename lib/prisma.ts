@@ -7,8 +7,42 @@ export type Image = {
   id: number;
   url: string;
   bgRemoval: boolean;
-  productId: number | null;
-  bannerId: number | null;
+  productId?: number;
+  bannerId?: number;
+  product?: Product;
+  banner?: Banner;
+};
+
+export type Banner = {
+  id: number;
+  url: string;
+  imageId: number;
+  image: Image;
+};
+
+export type Size = {
+  id: number;
+  name: string;
+  priceAdjustment: number;
+  categoryId: number;
+  category?: Category;
+  stock?: ProductStock[];
+};
+
+export type ProductStock = {
+  id: number;
+  productId: number;
+  sizeId: number;
+  inStock: boolean;
+  product?: Product;
+  size?: Size;
+};
+
+export type Category = {
+  id: number;
+  name: string;
+  sizes?: Size[];
+  products?: Product[];
 };
 
 export type Product = {
@@ -17,16 +51,19 @@ export type Product = {
   name: string;
   originalPrice: number;
   price: number;
-  category: string;
-  images: Image[] | null;
-  views: View[] | null;
+  categoryName: string;
+  category?: Category;
+  images?: Image[];
+  views?: View[];
+  purchases?: Purchase[];
+  stock?: ProductStock[];
 };
 
 export type View = {
   id: number;
   productId: number;
-  userId: number | null;
-  identifier: string | null;
+  userId?: number;
+  identifier?: string;
   viewedAt: Date;
   count: number;
   product?: Product;

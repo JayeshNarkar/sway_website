@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -23,32 +23,46 @@ import {
 import { Input } from "@/components/ui/input";
 import { onSubmit } from "./AddProduct";
 import { useRouter } from "next/navigation";
+import { getCategory } from "@/components/admin/category/getCategory";
 
 export const formSchema = z.object({
   productName: z
     .string()
-    .min(2, { message: "Product name should be atleast 2 characters" })
+    .min(2, { message: "Product name should be at least 2 characters" })
     .max(50, { message: "Product name should be at most 50 characters" }),
   price: z.string().min(1, { message: "Price must be greater than 0" }),
-  category: z.enum(["Upperwear", "Lowerwear", "Other"]).default("Other"),
+  category: z.string().min(1, { message: "Category is required" }),
 });
 
 export type FormSchemaType = z.infer<typeof formSchema>;
+
 interface Response {
   message: string | null;
   status: number;
 }
 
-function ProductForm() {
+function AddProductForm() {
   const [images, setImages] = useState<File[]>([]);
   const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState<Response | null>(null);
+  const [categories, setCategories] = useState<{ id: number; name: string }[]>(
+    []
+  );
   const router = useRouter();
+
+  useEffect(() => {
+    async function fetchCategories() {
+      const categories = await getCategory();
+      setCategories(categories);
+    }
+    fetchCategories();
+  }, []);
+
   const form = useForm<FormSchemaType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       productName: "",
-      category: "Other",
+      category: "",
       price: "0",
     },
   });
@@ -91,6 +105,7 @@ function ProductForm() {
     if (response.status === 200) {
       router.refresh();
       setImages([]);
+      setResponse(null);
     } else {
       setResponse(response);
     }
@@ -112,6 +127,7 @@ function ProductForm() {
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
           name="price"
@@ -125,6 +141,7 @@ function ProductForm() {
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
           name="category"
@@ -142,14 +159,18 @@ function ProductForm() {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="Upperwear">Upperwear</SelectItem>
-                  <SelectItem value="Lowerwear">Lowerwear</SelectItem>
-                  <SelectItem value="Other">Other</SelectItem>
+                  {categories.map((category) => (
+                    <SelectItem key={category.id} value={category.name}>
+                      {category.name}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
+              <FormMessage />
             </FormItem>
           )}
         />
+
         <FormItem>
           <FormLabel className="text-base">Images:</FormLabel>
           <FormControl>
@@ -195,9 +216,11 @@ function ProductForm() {
             ))}
           </div>
         </FormItem>
+
         <Button type="submit" disabled={loading}>
           {loading ? "Submitting..." : "Submit"}
         </Button>
+
         {response?.message && (
           <p
             className={`${
@@ -212,4 +235,4 @@ function ProductForm() {
   );
 }
 
-export default ProductForm;
+export default AddProductForm;

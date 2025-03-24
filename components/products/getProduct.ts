@@ -9,6 +9,11 @@ async function getProduct(id: number) {
       },
       include: {
         images: true,
+        stock: {
+          include: {
+            size: true,
+          },
+        },
       },
     });
     return product;
