@@ -18,11 +18,21 @@ function NewArrivals({
         {products.map((product) => (
           <Link
             key={product.id}
-            className="flex flex-col items-center border border-gray-200 rounded-lg p-4 transition-all shadow-md hover:border-gray-300 bg-white product-scroll-item"
+            className="flex flex-col items-center border border-gray-200 rounded-lg p-4 transition-all shadow-md hover:border-gray-300 bg-white product-scroll-item relative" // Added relative here
             href={"/products/" + product.id}
           >
             {product.images && product.images.length > 0 ? (
               <div className="w-full h-64 relative overflow-hidden rounded-lg">
+                {product.originalPrice != -1 && (
+                  <div className="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded z-10 lg:text-sm">
+                    {Math.round(
+                      ((product.originalPrice - product.price) /
+                        product.originalPrice) *
+                        100
+                    )}
+                    % OFF
+                  </div>
+                )}
                 <img
                   src={getCloudinaryImageUrl(product.images[0], cldName)}
                   alt={product.name}
