@@ -50,7 +50,7 @@ function Footer() {
             </ul>
           </div>
 
-          <div>
+          <div className="hidden lg:block">
             <h3 className="font-semibold text-gray-800 mb-4">Support</h3>
             <ul className="space-y-2">
               <li>

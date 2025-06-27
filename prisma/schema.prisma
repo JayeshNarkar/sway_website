@@ -20,6 +20,8 @@ model User {
   isAdmin  Boolean  @default(false)
   views      View[]     
   purchases Purchase[]    
+  addresses Address[]
+  contact Contact[]
 }
 
 model Size {
@@ -29,13 +31,14 @@ model Size {
   category     Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   categoryId   Int
   stock        ProductStock[]
+  purchases Purchase[]
 }
 
 model Category {
   id       Int      @id @default(autoincrement())
   name     String   @unique
   sizes    Size[]   
-  products Product[]
+  products Product[]  
 }
 
 model Product {
@@ -96,15 +99,61 @@ model Banner {
   image    Image    @relation("BannerImage", fields: [imageId], references: [id], onDelete: Cascade)
 }
 
+model Contact{
+  id Int @id @default(autoincrement())
+  
+  number String
+
+  userId Int 
+  purchases Purchase[]
+  user        User    @relation(fields: [userId], references: [id])
+}
+
 model Purchase {
   id          Int      @id @default(autoincrement())
   userId      Int
   productId   Int
-  quantity    Int      @default(1)
-  purchasedAt DateTime @default(now())
+  sizeId Int
+  addressId Int
+  contactId Int
 
+  totalPrice Int 
+
+  status PurchaseStatus @default(pending)
+  paymentMethod PaymentMethod @default(upi)
+
+  purchasedAt DateTime @default(now())
+  
+  contact Contact @relation(fields: [contactId], references: [id] )
+  address Address @relation(fields: [addressId], references: [id] )
+  size Size @relation(fields: [sizeId], references: [id])
   user        User    @relation(fields: [userId], references: [id])
   product     Product @relation(fields: [productId], references: [id])
+}
 
-  @@unique([userId, productId]) 
+enum PurchaseStatus {
+  pending
+  completed
+  delivered
+  cancelled
+  failed
+}
+
+enum PaymentMethod {
+  upi
+  cod
+}
+
+model Address {
+  id Int @id @default(autoincrement())
+  userId Int
+  flatAndBuilding String
+  street String
+  pincode String
+  city String
+  state String
+  country String
+  
+  purchase Purchase[]
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

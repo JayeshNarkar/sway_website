@@ -27,6 +27,7 @@ export type Size = {
   categoryId: number;
   category?: Category;
   stock?: ProductStock[];
+  purchases?: Purchase[];
 };
 
 export type ProductStock = {
@@ -70,20 +71,50 @@ export type View = {
   user?: User;
 };
 
-export type User = {
+export type Contact = {
   id: number;
-  email: string;
-  isAdmin: boolean;
-  views?: View[];
+  number: string;
+  userId: number;
+  user?: User;
   purchases?: Purchase[];
+};
+
+export type Address = {
+  id: number;
+  userId: number;
+  flatAndBuilding: string;
+  street: string;
+  pincode: string;
+  city: string;
+  state: string;
+  country: string;
+  purchases?: Purchase[];
+  user?: User;
 };
 
 export type Purchase = {
   id: number;
   userId: number;
   productId: number;
-  quantity: number;
+  sizeId: number;
+  addressId: number;
+  contactId: number;
+  status: "pending" | "completed" | "delivered" | "cancelled" | "failed";
+  paymentMethod: "upi" | "cod";
   purchasedAt: Date;
+  contact?: Contact;
+  address?: Address;
+  size?: Size;
   user?: User;
   product?: Product;
+};
+
+export type User = {
+  id: number;
+  email: string;
+  isAdmin: boolean;
+  views?: View[];
+  purchases?: Purchase[];
+  addresses?: Address[];
+  contact?: Contact[];
 };

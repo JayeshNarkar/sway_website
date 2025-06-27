@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Product } from "@/lib/prisma";
+import Link from "next/link";
 
 interface ProductViewClientProps {
   product: Product;
@@ -70,7 +71,19 @@ export default function ProductViewClient({ product }: ProductViewClientProps) {
             Out of Stock
           </Button>
         ) : (
-          <Button className="text-lg text-white">Buy Now</Button>
+          <Link
+            href={{
+              pathname: "/purchase",
+              query: {
+                id: product.id,
+                size: selectedSize,
+              },
+            }}
+          >
+            <Button className="text-lg text-white" onClick={() => {}}>
+              Buy Now
+            </Button>
+          </Link>
         )
       ) : (
         <Button className="text-lg" disabled>

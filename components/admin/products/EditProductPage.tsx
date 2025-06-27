@@ -7,7 +7,7 @@ async function EditProductPage() {
   const products = await productFetch();
   const cldName = getCldName();
   return (
-    <div className="overflow-x-auto whitespace-nowrap  max-w-full">
+    <div className="overflow-x-auto whitespace-nowrap max-w-full">
       <div className="flex space-x-4 overflow-scroll">
         {products ? (
           products.map((product) => (
