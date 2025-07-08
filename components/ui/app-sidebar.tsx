@@ -9,7 +9,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { LogIn, ShieldCheck, LogOut } from "lucide-react";
+import { LogIn, ShieldCheck, LogOut, Package } from "lucide-react";
 import { useEffect, useState } from "react";
 
 export function AppSidebar() {
@@ -23,14 +23,21 @@ export function AppSidebar() {
         const updatedNavItems = [...navItems];
         if (session.user.isAdmin) {
           if (!updatedNavItems.some((item) => item.url === "/admin")) {
-            updatedNavItems.push({
+            updatedNavItems.splice(1, 0, {
               title: "Admin",
               url: "/admin",
               icon: ShieldCheck,
             });
           }
         }
-        if (!updatedNavItems.some((item) => item.url === "/profile")) {
+        if (!updatedNavItems.some((item) => item.url === "/your-orders")) {
+          updatedNavItems.splice(1, 0, {
+            title: "Your Orders",
+            url: "/your-orders",
+            icon: Package,
+          });
+        }
+        if (!updatedNavItems.some((item) => item.url === "/logout")) {
           updatedNavItems.push({
             title: "Logout",
             url: "/logout",

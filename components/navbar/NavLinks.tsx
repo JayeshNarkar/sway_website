@@ -2,9 +2,9 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import NavItems from "@/components/navbar/NavItems";
 import authOptions from "@/lib/authOptions";
-import { Info, LogIn } from "lucide-react";
+import { Info, LogIn, Package } from "lucide-react";
 import { getServerSession } from "next-auth";
-import AnimatedTextUnderline from "../ui/animated-text-underline";
+import AnimatedTextUnderline from "@/components/ui/animated-text-underline";
 
 async function NavLinks() {
   const session = await getServerSession(authOptions);
@@ -14,6 +14,13 @@ async function NavLinks() {
       if (!filteredNavItems.some((item) => item.url === "/admin")) {
         filteredNavItems.push({ title: "Admin", url: "/admin", icon: Info });
       }
+    }
+    if (!filteredNavItems.some((item) => item.url === "/your-orders")) {
+      filteredNavItems.splice(1, 0, {
+        title: "Your Orders",
+        url: "/your-orders",
+        icon: Package,
+      });
     }
     if (!filteredNavItems.some((item) => item.url === "/logout")) {
       filteredNavItems.push({ title: "logout", url: "/logout", icon: Info });

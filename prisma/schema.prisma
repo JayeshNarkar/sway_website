@@ -18,8 +18,9 @@ model User {
   id       Int      @id @default(autoincrement())
   email    String   @unique
   isAdmin  Boolean  @default(false)
+  paymentInformations PaymentInformation[]
   views      View[]     
-  purchases Purchase[]    
+  orders Order[]    
   addresses Address[]
   contact Contact[]
 }
@@ -31,7 +32,7 @@ model Size {
   category     Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   categoryId   Int
   stock        ProductStock[]
-  purchases Purchase[]
+  orders Order[]
 }
 
 model Category {
@@ -48,10 +49,12 @@ model Product {
   price        Int
   categoryName   String
   createdAt    DateTime @default(now())
+  hidden Boolean @default(false)
+  
   category     Category @relation(fields: [categoryName], references: [name], onDelete: Cascade)
   images       Image[]@relation("ProductImages")
   views        View[]
-  purchases    Purchase[]
+  orders    Order[]
   stock        ProductStock[]
 }
 
@@ -105,35 +108,60 @@ model Contact{
   number String
 
   userId Int 
-  purchases Purchase[]
+  orders Order[]
   user        User    @relation(fields: [userId], references: [id])
+    
+  @@unique([userId, number])
 }
 
-model Purchase {
-  id          Int      @id @default(autoincrement())
+model PromoCode {
+  id       Int      @id @default(autoincrement())
+  code     String   @unique
+  discount Float
+  isActive Boolean  @default(true)
+  orders   Order[]
+}
+
+model Order {
+  id          String   @id @default(uuid())
   userId      Int
   productId   Int
   sizeId Int
   addressId Int
   contactId Int
+  promoCodeId Int?  
+  paymentInformationId Int?
 
   totalPrice Int 
 
-  status PurchaseStatus @default(pending)
+  status OrderStatus @default(pending)
   paymentMethod PaymentMethod @default(upi)
 
-  purchasedAt DateTime @default(now())
+  orderedAt DateTime @default(now())
   
   contact Contact @relation(fields: [contactId], references: [id] )
   address Address @relation(fields: [addressId], references: [id] )
+  promoCode PromoCode? @relation(fields: [promoCodeId], references: [id])
+  paymentInformation PaymentInformation? @relation(fields: [paymentInformationId], references: [id])
   size Size @relation(fields: [sizeId], references: [id])
   user        User    @relation(fields: [userId], references: [id])
   product     Product @relation(fields: [productId], references: [id])
 }
 
-enum PurchaseStatus {
+model PaymentInformation {
+  id          Int      @id @default(autoincrement())
+  userId      Int
+  upiId       String?   // Customer's UPI ID (e.g. "user@upi")
+  txnId       String?  // Optional transaction ID (for successful payments)
+  
+  orders      Order[]  
+  user        User    @relation(fields: [userId], references: [id])
+}
+
+enum OrderStatus {
+  temp
   pending
-  completed
+  confirmed
   delivered
   cancelled
   failed
@@ -154,6 +182,6 @@ model Address {
   state String
   country String
   
-  purchase Purchase[]
+  orders Order[]
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

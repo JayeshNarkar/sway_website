@@ -13,12 +13,12 @@ export default async function Purchase({
   if (!session?.user) {
     redirect("/");
   }
-  const { id, size } = await searchParams;
+  const { id, size, promoCode } = await searchParams;
   const { isValid, priceAdjustment } = await validateProduct(
     Number(id),
     size as string
   );
-  if (!isValid) {
+  if (!isValid && !Array.isArray(promoCode)) {
     return (
       <div className="w-full min-h-screen text-center items-center flex content-center justify-center">
         <p>Product of that size isnt in stock Or the id is incorrect</p>
@@ -30,6 +30,7 @@ export default async function Purchase({
       id={Number(id)}
       size={size as string}
       priceAdjustment={priceAdjustment as number}
+      promoCode={promoCode as string | undefined}
     />
   );
 }

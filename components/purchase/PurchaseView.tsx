@@ -1,29 +1,35 @@
 "use server";
 import authOptions from "@/lib/authOptions";
-import { Image, prisma } from "@/lib/prisma";
+import { Image, prisma, Product } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import getCloudinaryImageUrl from "@/lib/getCloudinaryImageUrl";
 import getCldName from "@/lib/getCldName";
 import PurchaseForm from "@/components/purchase/PurchaseForm";
+import PromoCodeDesktop from "@/components/purchase/promoCodeDesktop";
 
 export default async function PurchaseView({
   id,
   size,
   priceAdjustment,
+  promoCode,
 }: {
   id: number;
   size: string;
   priceAdjustment: number;
+  promoCode: string | undefined;
 }) {
   const session = await getServerSession(authOptions);
   const cldName = getCldName();
 
-  const user = await prisma.user.findUnique({
+  const addresses = await prisma.address.findMany({
     where: {
-      email: session?.user.email as string,
-    },
-    include: {
-      addresses: true,
+      userId: (
+        await prisma.user.findUnique({
+          where: {
+            email: session?.user.email as string,
+          },
+        })
+      )?.id,
     },
   });
 
@@ -36,16 +42,20 @@ export default async function PurchaseView({
     },
   });
 
+  const totalPrice = (product?.price as number) + priceAdjustment;
+
   return (
-    <div className="pt-[64px] flex-1 w-full min-h-screen p-4 lg:px-0 flex flex-col lg:flex-row">
+    <div className=" flex-1 w-full min-h-screen lg:px-0 flex flex-col lg:flex-row p-4 lg:p-0 pt-[64px] lg:pt-[57.6px]">
       <div className="lg:w-1/2 lg:border-t-2 border-gray-300 order-2 lg:order-1 p-2 pt-4 lg:pt-2">
         <PurchaseForm
           productId={id}
           productSize={size}
-          totalPrice={(product?.price as number) + priceAdjustment}
+          totalPrice={totalPrice}
+          promoCode={promoCode}
+          addresses={addresses}
         />
       </div>
-      <div className="lg:w-1/2 lg:bg-gray-200 lg:border-l-2 border-gray-300 lg:border-t-2 lg:p-4 order-1 lg:order-2 lg:sticky lg:top-[64px] lg:h-[calc(100vh-64px)] lg:overflow-y-auto">
+      <div className="lg:w-1/2 lg:bg-gray-200 lg:border-l-2 border-gray-300 lg:border-t-2 lg:p-4 order-1 lg:order-2 lg:sticky lg:top-[57.6px] lg:h-[calc(100vh-57.6px)] lg:overflow-y-auto">
         <div className="flex w-full justify-between content-between border-2 border-gray-400 p-4 py-2 rounded-md bg-gray-300 mt-2 lg:mt-0">
           <div className="flex">
             <img
@@ -62,23 +72,7 @@ export default async function PurchaseView({
             ₹{(product?.price as number) + priceAdjustment}
           </p>
         </div>
-        <p className="font-bold text-xl mb-2 lg:block hidden pt-2">
-          Order summary
-        </p>
-        <div className="w-full px-2 space-y-2 hidden lg:block text-sm">
-          <div className="flex content-between justify-between">
-            <p>Subtotal</p>
-            <p>₹{(product?.price as number) + priceAdjustment}</p>
-          </div>
-          <div className="flex content-between justify-between">
-            <p>Shipping</p>
-            <p className="text-gray-500">Free Shipping!</p>
-          </div>
-          <div className="flex content-between justify-between text-xl font-bold">
-            <p>Total</p>
-            <p>₹{(product?.price as number) + priceAdjustment}</p>
-          </div>
-        </div>
+        <PromoCodeDesktop totalPrice={totalPrice} promoCode={promoCode} />
       </div>
     </div>
   );

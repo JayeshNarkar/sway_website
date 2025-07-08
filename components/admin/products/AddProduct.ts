@@ -2,7 +2,7 @@
 
 import { v2 as cloudinary } from "cloudinary";
 import { prisma } from "@/lib/prisma";
-import { FormSchemaType } from "./AddProductForm";
+import { FormSchemaType } from "@/components/admin/products/AddProductForm";
 import { revalidatePath } from "next/cache";
 
 const cld_api_key = process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY;

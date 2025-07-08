@@ -5,7 +5,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import { Category, Size } from "@/lib/prisma";
-import { editCategory, deleteCategory } from "./editCategory";
+import {
+  editCategory,
+  deleteCategory,
+} from "@/components/admin/category/editCategory";
 
 interface EditCategoryFormProps {
   category: Category;
@@ -56,11 +59,9 @@ function EditCategoryForm({ category }: EditCategoryFormProps) {
     setLoading(true);
     setErrorMessage("");
 
-    console.log("Sizes to update:", sizes);
-
     try {
       const response = await editCategory(category.id, sizes);
-      console.log(response);
+
       if (response.status === 200) {
         router.refresh();
         setErrorMessage("");

@@ -27,7 +27,7 @@ export type Size = {
   categoryId: number;
   category?: Category;
   stock?: ProductStock[];
-  purchases?: Purchase[];
+  orders?: Order[];
 };
 
 export type ProductStock = {
@@ -49,6 +49,7 @@ export type Category = {
 export type Product = {
   id: number;
   createdAt: Date;
+  hidden: boolean;
   name: string;
   originalPrice: number;
   price: number;
@@ -56,7 +57,7 @@ export type Product = {
   category?: Category;
   images?: Image[];
   views?: View[];
-  purchases?: Purchase[];
+  orders?: Order[];
   stock?: ProductStock[];
 };
 
@@ -76,7 +77,7 @@ export type Contact = {
   number: string;
   userId: number;
   user?: User;
-  purchases?: Purchase[];
+  orders?: Order[];
 };
 
 export type Address = {
@@ -88,22 +89,42 @@ export type Address = {
   city: string;
   state: string;
   country: string;
-  purchases?: Purchase[];
+  orders?: Order[];
   user?: User;
 };
 
-export type Purchase = {
+export type PromoCode = {
   id: number;
+  code: string;
+  discount: number;
+  isActive: boolean;
+  orders?: Order[];
+};
+
+export type OrderStatus =
+  | "temp"
+  | "pending"
+  | "confirmed"
+  | "delivered"
+  | "cancelled"
+  | "failed";
+export type PaymentMethod = "upi" | "cod";
+
+export type Order = {
+  id: string;
   userId: number;
   productId: number;
   sizeId: number;
   addressId: number;
   contactId: number;
-  status: "pending" | "completed" | "delivered" | "cancelled" | "failed";
-  paymentMethod: "upi" | "cod";
-  purchasedAt: Date;
+  promoCodeId?: number;
+  totalPrice: number;
+  status: OrderStatus;
+  paymentMethod: PaymentMethod;
+  orderedAt: Date;
   contact?: Contact;
   address?: Address;
+  promoCode?: PromoCode;
   size?: Size;
   user?: User;
   product?: Product;
@@ -114,7 +135,7 @@ export type User = {
   email: string;
   isAdmin: boolean;
   views?: View[];
-  purchases?: Purchase[];
+  orders?: Order[];
   addresses?: Address[];
   contact?: Contact[];
 };

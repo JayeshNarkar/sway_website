@@ -21,7 +21,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { onSubmit } from "./AddProduct";
+import { onSubmit } from "@/components/admin/products/AddProduct";
 import { useRouter } from "next/navigation";
 import { getCategory } from "@/components/admin/category/getCategory";
 
