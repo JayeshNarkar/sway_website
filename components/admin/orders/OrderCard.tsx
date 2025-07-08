@@ -106,7 +106,7 @@ export default function OrderCard({
           </p>
         )}
         <strong className="text-base text-gray-800">
-          Order's Transaction ID:
+          Order&apos;s Transaction ID:
         </strong>
         {order.paymentInformation?.txnId && (
           <p className="text-sm text-gray-600  whitespace-nowrap">

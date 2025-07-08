@@ -2,7 +2,7 @@ import CheckoutPage from "@/components/checkout/CheckoutPage";
 import authOptions from "@/lib/authOptions";
 import { cleanupTempOrders } from "@/lib/cleanupTempOrders";
 
-import { Image, prisma } from "@/lib/prisma";
+import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
@@ -74,6 +74,7 @@ export default async function Purchase({
           <div className="flex justify-center">
             <div className="relative">
               <img
+                alt="Achievement: How did we get here"
                 src="https://hypixel.net/attachments/63cacee6-7a81-4007-af37-d27bf86ef118-jpeg.2694842/"
                 className="h-32 object-contain pixelated"
               />

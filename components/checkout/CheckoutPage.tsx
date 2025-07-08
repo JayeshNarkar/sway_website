@@ -16,7 +16,11 @@ type OrderWithProductAndSize = Prisma.OrderGetPayload<{
   };
 }>;
 
-export default function ({ order }: { order: OrderWithProductAndSize }) {
+export default function CheckoutPage({
+  order,
+}: {
+  order: OrderWithProductAndSize;
+}) {
   const cldName = getCldName();
   const upiId = "utsavbhandari220@oksbi";
   const url = `upi://pay?pa=${upiId}&pn=SwayOrder&am=${order.totalPrice}&cu=INR`;
@@ -65,8 +69,8 @@ export default function ({ order }: { order: OrderWithProductAndSize }) {
               <span className="mr-2 mt-0.5">•</span>
               <span>
                 Orders will be processed only after receiving a valid UPI
-                payment reference. Your order status will be marked as "Pending"
-                until payment verification is complete.
+                payment reference. Your order status will be marked as
+                &quot;Pending&quot; until payment verification is complete.
               </span>
             </li>
             <li className="flex items-start">

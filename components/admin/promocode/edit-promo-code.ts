@@ -32,6 +32,7 @@ export async function editPromoCode(
     revalidatePath("/admin/products");
     return true;
   } catch (error) {
+    console.log(error);
     return { success: false, message: "Failed to edit" };
   }
 }

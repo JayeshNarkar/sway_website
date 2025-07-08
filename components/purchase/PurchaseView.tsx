@@ -1,6 +1,6 @@
 "use server";
 import authOptions from "@/lib/authOptions";
-import { Image, prisma, Product } from "@/lib/prisma";
+import { Image, prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import getCloudinaryImageUrl from "@/lib/getCloudinaryImageUrl";
 import getCldName from "@/lib/getCldName";

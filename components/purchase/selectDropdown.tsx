@@ -35,6 +35,7 @@ interface SelectDropdownProps<T> {
   children?: ReactNode;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function SelectDropdown<T extends Record<string, any>>({
   label,
   value,
@@ -48,7 +49,6 @@ export function SelectDropdown<T extends Record<string, any>>({
   disabled = false,
   id,
   className,
-  children,
 }: SelectDropdownProps<T>) {
   return (
     <>

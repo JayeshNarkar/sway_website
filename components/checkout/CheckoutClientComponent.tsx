@@ -4,7 +4,6 @@ import QRCode from "react-qr-code";
 import { Button } from "@/components/ui/button";
 import { useRef, useState } from "react";
 import { toPng } from "html-to-image";
-import { redirect } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { AlertCircleIcon, CheckCircle2Icon, Info } from "lucide-react";
@@ -12,7 +11,7 @@ import { confirmPaymentInformation } from "@/components/checkout/confirm-payment
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { PaymentInformation } from "@prisma/client/edge";
 
-export default function ({
+export default function CheckoutClientComponent({
   url,
   upiId,
   orderId,
@@ -93,7 +92,7 @@ export default function ({
         <div className="flex items-start mt-2 text-sm text-gray-500 mb-4">
           <Info className="w-4 h-4 mr-1.5 mt-0.5 flex-shrink-0" />
           <span>
-            For payment verification. Please enter the UPI ID you'll use to
+            For payment verification. Please enter the UPI ID you&apos;ll use to
             complete this transaction.
           </span>
         </div>

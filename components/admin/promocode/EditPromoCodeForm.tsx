@@ -8,7 +8,11 @@ import { removePromoCode } from "@/components/admin/promocode/remove-promo-code"
 import { PromoCode } from "@/lib/prisma";
 import { editPromoCode } from "@/components/admin/promocode/edit-promo-code";
 
-export default function ({ promoCode }: { promoCode: PromoCode }) {
+export default function EditPromoCodeForm({
+  promoCode,
+}: {
+  promoCode: PromoCode;
+}) {
   const [code, setCode] = useState(promoCode.code);
   const [discount, setDiscount] = useState(promoCode.discount);
   const [isActive, setIsActive] = useState(promoCode.isActive);

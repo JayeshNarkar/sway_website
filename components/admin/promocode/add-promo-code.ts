@@ -28,6 +28,7 @@ export async function addPromoCode(
     revalidatePath("/admin/products");
     return true;
   } catch (error) {
+    console.log(error);
     return { success: false, message: "promo code already exists" };
   }
 }

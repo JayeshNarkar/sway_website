@@ -13,6 +13,7 @@ export async function removePromoCode(id: number) {
     revalidatePath("/admin/products");
     return true;
   } catch (error) {
+    console.log(error);
     return false;
   }
 }

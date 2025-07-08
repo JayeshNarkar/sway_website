@@ -37,7 +37,7 @@ const statusColors = {
   failed: "bg-gray-100 text-gray-800",
 };
 
-export default function ({
+export default function YourOrdersPage({
   orders,
 }: {
   orders: OrderWithProductAndSizeAndPaymentInformation[];
@@ -105,7 +105,7 @@ export default function ({
       {orders.length === 0 && (
         <div className="text-center py-12 w-full">
           <p className="text-gray-500 text-lg">
-            You haven't placed any orders yet
+            You haven&apos;t placed any orders yet
           </p>
         </div>
       )}
@@ -190,8 +190,8 @@ function OrderCard({
             <div className="flex items-start mt-2 text-sm text-gray-500 md:mb-0">
               <Info className="w-4 h-4 mr-1.5 mt-0.5 flex-shrink-0" />
               <span>
-                You'll be redirected to the checkout page to view our UPI
-                payment details and complete your payment if you haven't
+                You&apos;ll be redirected to the checkout page to view our UPI
+                payment details and complete your payment if you haven&apos;t
                 already.
               </span>
             </div>

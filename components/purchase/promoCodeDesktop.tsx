@@ -9,7 +9,7 @@ import { AlertCircleIcon, CheckCircle2Icon } from "lucide-react";
 import { checkPromoCode } from "@/components/purchase/check-promo-code";
 import { useRouter } from "next/navigation";
 
-export default function ({
+export default function PromoCodeDesktop({
   totalPrice,
   promoCode,
 }: {

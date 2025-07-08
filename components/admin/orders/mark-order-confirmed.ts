@@ -57,7 +57,7 @@ export async function markOrderConfirmed(
       Thank you for shopping with us!
     `;
 
-    await new Promise((resolve, reject) => {
+    await new Promise((resolve) => {
       transporter.sendMail(
         {
           from: `"Sway" <${process.env.EMAIL_USER}>`,
