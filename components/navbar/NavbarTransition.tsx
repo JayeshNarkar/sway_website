@@ -45,6 +45,7 @@ function NavbarTransition({
                 isScrolled ? "w-16" : "w-20"
               } md:ml-4 transition-all duration-300 rounded-full`}
               src="/logo.png"
+              alt="logo"
             />
           </Link>
         </div>

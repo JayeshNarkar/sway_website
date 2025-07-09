@@ -46,6 +46,7 @@ export async function submitLaunchTime(
       data,
     };
   } catch (error) {
+    console.log(error);
     return {
       success: false,
       message: "Failed to schedule launch. Please try again.",

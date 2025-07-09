@@ -5,7 +5,6 @@ import { getServerSession } from "next-auth";
 import validateProduct from "@/components/purchase/validateProduct";
 import { PaymentMethod, prisma } from "@/lib/prisma";
 import { checkPromoCode } from "@/components/purchase/check-promo-code";
-import { cleanupTempOrders } from "@/lib/cleanupTempOrders";
 
 type ExistingAddress = {
   id: number;
