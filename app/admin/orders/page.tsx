@@ -1,10 +1,7 @@
 import OrderCard from "@/components/admin/orders/OrderCard";
-import { cleanupTempOrders } from "@/lib/cleanupTempOrders";
 import { prisma } from "@/lib/prisma";
 
 export default async function AdminOrdersPage() {
-  await cleanupTempOrders();
-
   const orders = await prisma.order.findMany({
     where: {
       OR: [
@@ -45,7 +42,7 @@ export default async function AdminOrdersPage() {
   );
 
   return (
-    <div className="w-full h-full p-4 mt-[64px] space-y-8">
+    <div className="w-full min-h-screen p-4 mt-[64px] space-y-8">
       <section>
         <h2 className="text-xl font-semibold mb-4">
           Pending Orders ({pendingOrders.length})

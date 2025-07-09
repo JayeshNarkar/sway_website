@@ -185,3 +185,9 @@ model Address {
   orders Order[]
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
+
+model WebsiteLaunch{
+  id Int @id @default(1)
+  launchAt    DateTime
+  timezone    String?  @default("Asia/Kolkata")
+}

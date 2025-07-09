@@ -32,19 +32,20 @@ function NavbarTransition({
       <div
         className={`transition-all duration-300 ${
           isScrolled
-            ? "py-1 bg-white border-b-2 border-gray-600"
+            ? "py-1 bg-[#e5e4df] border-b-2 border-gray-600"
             : "py-2 text-white"
         } fixed  top-0 w-full z-50 flex justify-between items-center `}
       >
         <div className="flex justify-center content-center items-center">
           <CustomSidebarTrigger />
-          <Link
-            className={`${
-              isScrolled ? "text-2xl" : " text-3xl"
-            } md:mx-2 transition-all duration-300 rounded-full jacquard font-bold text-stone-800`}
-            href="/"
-          >
-            Sway
+
+          <Link href={"/"}>
+            <img
+              className={`${
+                isScrolled ? "w-16" : "w-20"
+              } md:ml-4 transition-all duration-300 rounded-full`}
+              src="/logo.png"
+            />
           </Link>
         </div>
         {children}

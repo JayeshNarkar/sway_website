@@ -104,6 +104,82 @@ body {
   font-family: "Share Tech Mono", monospace;
 }
 
+.iceberg {
+  font-family: "Iceberg", sans-serif;
+}
+
+@keyframes flicker {
+  0%,
+  19%,
+  21%,
+  23%,
+  25%,
+  54%,
+  56%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 20px 10px #ff0000;
+  }
+  20%,
+  22%,
+  24%,
+  55% {
+    opacity: 0.5;
+    box-shadow: 0 0 10px 5px #ff0000;
+  }
+}
+
+.animate-flicker {
+  animation: flicker 3s infinite;
+}
+
+@keyframes glitch {
+  0% {
+    transform: translate(0);
+  }
+  20% {
+    transform: translate(-2px, 2px);
+  }
+  40% {
+    transform: translate(-2px, -2px);
+  }
+  60% {
+    transform: translate(2px, 2px);
+  }
+  80% {
+    transform: translate(2px, -2px);
+  }
+  100% {
+    transform: translate(0);
+  }
+}
+
+/* Noise Texture Overlay */
+.noise-overlay {
+  background-image: url("/noise.png");
+  opacity: 0.15;
+  mix-blend-mode: overlay;
+}
+
+/* Custom Neon Effects */
+.text-neon-red {
+  text-shadow: 0 0 5px #ff0000;
+}
+
+.border-neon-pulse {
+  animation: pulse-border 2s infinite;
+}
+
+@keyframes pulse-border {
+  0%,
+  100% {
+    border-color: rgba(255, 0, 0, 0.5);
+  }
+  50% {
+    border-color: rgba(255, 0, 0, 0.2);
+  }
+}
+
 /* @keyframes appear {
   from {
     opacity: 0;

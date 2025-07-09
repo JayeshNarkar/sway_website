@@ -28,8 +28,6 @@ async function verifyInformation(
   number: string,
   addressData: ExistingAddress | NewAddress
 ) {
-  await cleanupTempOrders();
-
   const session = await getServerSession(authOptions);
   if (!session) {
     return {

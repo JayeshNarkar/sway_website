@@ -3,6 +3,10 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import CustomNavBar from "@/components/navbar/CustomNavBar";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { cleanupTempOrders } from "@/lib/cleanupTempOrders";
+import { prisma } from "@/lib/prisma";
+import { checkIfLaunched } from "@/components/site-related/check-if-release";
+import SiteLaunchCountdown from "@/components/site-related/SiteLaunchCountdown";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,28 +29,63 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin={"anonymous"}
-        />
-        {/*  eslint-disable-next-line @next/next/no-page-custom-font */}
-        <link
-          href="https://fonts.googleapis.com/css2?family=Iceberg&family=Jacquard+24&family=Share+Tech+Mono&display=swap"
-          rel="stylesheet"
-        />
-      </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col space-mono`}
-      >
-        <CustomNavBar />
-        {children}
-        <SpeedInsights />
-      </body>
-    </html>
-  );
+  await cleanupTempOrders();
+
+  const launchDate = await prisma.websiteLaunch.findUnique({
+    where: {
+      id: 1,
+    },
+  });
+
+  const isLaunched = await checkIfLaunched(launchDate);
+
+  if (isLaunched) {
+    return (
+      <html lang="en">
+        <head>
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
+          <link
+            rel="preconnect"
+            href="https://fonts.gstatic.com"
+            crossOrigin={"anonymous"}
+          />
+          {/*  eslint-disable-next-line @next/next/no-page-custom-font */}
+          <link
+            href="https://fonts.googleapis.com/css2?family=Iceberg&family=Jacquard+24&family=Share+Tech+Mono&display=swap"
+            rel="stylesheet"
+          />
+        </head>
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col space-mono`}
+        >
+          <CustomNavBar />
+          {children}
+          <SpeedInsights />
+        </body>
+      </html>
+    );
+  } else {
+    return (
+      <html lang="en">
+        <head>
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
+          <link
+            rel="preconnect"
+            href="https://fonts.gstatic.com"
+            crossOrigin={"anonymous"}
+          />
+          {/*  eslint-disable-next-line @next/next/no-page-custom-font */}
+          <link
+            href="https://fonts.googleapis.com/css2?family=Iceberg&family=Jacquard+24&family=Share+Tech+Mono&display=swap"
+            rel="stylesheet"
+          />
+        </head>
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col space-mono`}
+        >
+          <SiteLaunchCountdown launchDate={launchDate} />
+        </body>
+      </html>
+    );
+  }
 }

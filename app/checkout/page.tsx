@@ -1,7 +1,5 @@
 import CheckoutPage from "@/components/checkout/CheckoutPage";
 import authOptions from "@/lib/authOptions";
-import { cleanupTempOrders } from "@/lib/cleanupTempOrders";
-
 import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
@@ -11,7 +9,6 @@ export default async function Purchase({
 }: {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  await cleanupTempOrders();
   const session = await getServerSession(authOptions);
   if (!session?.user) {
     redirect("/");

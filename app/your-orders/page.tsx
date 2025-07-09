@@ -1,13 +1,11 @@
 import YourOrdersPage from "@/components/your-orders/YourOrdersPage";
 import authOptions from "@/lib/authOptions";
-import { cleanupTempOrders } from "@/lib/cleanupTempOrders";
 import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
 async function YourOrders() {
-  await cleanupTempOrders();
   const session = await getServerSession(authOptions);
   if (!session) {
     redirect("/");
