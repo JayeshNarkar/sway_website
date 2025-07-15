@@ -1,73 +1,32 @@
-import getCloudinaryImageUrl from "@/lib/getCloudinaryImageUrl";
+"use client";
 import { Product } from "@/lib/prisma";
-import Link from "next/link";
+import { motion } from "framer-motion";
+import ProductItem from "./ProductItem";
 
-function NewArrivals({
-  products,
-  cldName,
-}: {
-  products: Product[];
-  cldName: string;
-}) {
+function NewArrivals({ products }: { products: Product[] }) {
   return (
     <div className="w-full bg-gray-50 py-6 border-t-2 border-gray-500">
-      <p className="font-semibold text-2xl text-center mb-8 text-gray-700">
-        New Arrivals
-      </p>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-50px" }}
+        transition={{ duration: 0.6, delay: 0.2 }}
+        className="text-center mb-8"
+      >
+        <h2 className="font-semibold text-2xl md:text-3xl text-gray-700 inline-block relative pb-1">
+          New Arrivals
+          <motion.span
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            className="absolute bottom-0 left-0 w-full h-0.5 bg-gray-500 origin-left"
+          />
+        </h2>
+      </motion.div>
       <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-4 mb-4">
-        {products.map((product) => (
-          <Link
-            key={product.id}
-            className="flex flex-col items-center border border-gray-200 rounded-lg p-4 transition-all shadow-md hover:border-gray-300 bg-white product-scroll-item relative" // Added relative here
-            href={"/products/" + product.id}
-          >
-            {product.images && product.images.length > 0 ? (
-              <div className="w-full h-64 relative overflow-hidden rounded-lg">
-                {product.originalPrice != -1 && (
-                  <div className="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded z-10 lg:text-sm">
-                    {Math.round(
-                      ((product.originalPrice - product.price) /
-                        product.originalPrice) *
-                        100
-                    )}
-                    % OFF
-                  </div>
-                )}
-                <img
-                  src={getCloudinaryImageUrl(product.images[0], cldName)}
-                  alt={product.name}
-                  className="w-full h-full object-contain absolute inset-0 duration-300 hover:scale-110 transition-all"
-                />
-                {product.images[1] && (
-                  <img
-                    src={getCloudinaryImageUrl(product.images[1], cldName)}
-                    alt={product.name}
-                    className="w-full h-full object-contain absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-300"
-                  />
-                )}
-              </div>
-            ) : (
-              <div className="w-full h-64 bg-gray-200 flex items-center justify-center rounded-lg">
-                <span className="text-gray-500">No Image</span>
-              </div>
-            )}
-
-            <div className="mt-4 text-center">
-              <p className="text-lg text-gray-800">{product.name}</p>
-              {product.originalPrice !== -1 ? (
-                <div className="flex items-center justify-center space-x-2">
-                  <p className="text-lg text-gray-600 font-semibold">
-                    ₹{product.price}
-                  </p>
-                  <p className="text-lg text-gray-500 line-through">
-                    ₹{product.originalPrice}
-                  </p>
-                </div>
-              ) : (
-                <p className="text-lg text-gray-600">₹{product.price}</p>
-              )}
-            </div>
-          </Link>
+        {products.map((product, index) => (
+          <ProductItem product={product} index={index} key={index} />
         ))}
       </div>
     </div>

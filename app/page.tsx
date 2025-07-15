@@ -13,7 +13,7 @@ async function Main() {
   return (
     <>
       <BannerSlideShow banners={banners} cldName={cldName} />
-      <NewArrivals products={newProducts as Product[]} cldName={cldName} />
+      <NewArrivals products={newProducts as Product[]} />
       <Footer />
     </>
   );

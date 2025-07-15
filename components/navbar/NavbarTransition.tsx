@@ -1,9 +1,10 @@
 "use client";
+import { SidebarIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/ui/app-sidebar";
-import CustomSidebarTrigger from "@/components/navbar/CustomSidebarTrigger";
 import Link from "next/link";
+import { useSidebar } from "@/components/ui/sidebar";
 
 function NavbarTransition({
   children,
@@ -26,6 +27,7 @@ function NavbarTransition({
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
   return (
     <SidebarProvider defaultOpen={false}>
       <AppSidebar />
@@ -37,13 +39,24 @@ function NavbarTransition({
         } fixed  top-0 w-full z-50 flex justify-between items-center `}
       >
         <div className="flex justify-center content-center items-center">
-          <CustomSidebarTrigger />
-
+          <button
+            onClick={() => {
+              const { toggleSidebar } = useSidebar();
+              toggleSidebar();
+            }}
+            className="md:hidden"
+          >
+            <SidebarIcon
+              className={`mx-2 ${
+                isScrolled ? "h-8 w-8" : "h-10 w-10"
+              } text-black transition-all duration-300`}
+            />
+          </button>
           <Link href={"/"}>
             <img
               className={`${
                 isScrolled ? "w-16" : "w-20"
-              } md:ml-4 transition-all duration-300 rounded-full`}
+              } md:ml-4 transition-all duration-300 rounded-full my-2`}
               src="/logo.png"
               alt="logo"
             />
