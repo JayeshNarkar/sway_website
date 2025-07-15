@@ -1,10 +1,9 @@
 "use client";
-import { SidebarIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/ui/app-sidebar";
 import Link from "next/link";
-import { useSidebar } from "@/components/ui/sidebar";
+import SidebarToggleButton from "./SidebarToggleButton";
 
 function NavbarTransition({
   children,
@@ -36,22 +35,10 @@ function NavbarTransition({
           isScrolled
             ? "py-1 bg-[#e5e4df] border-b-2 border-gray-600"
             : "py-2 text-white"
-        } fixed  top-0 w-full z-50 flex justify-between items-center `}
+        } fixed top-0 w-full z-50 flex justify-between items-center`}
       >
         <div className="flex justify-center content-center items-center">
-          <button
-            onClick={() => {
-              const { toggleSidebar } = useSidebar();
-              toggleSidebar();
-            }}
-            className="md:hidden"
-          >
-            <SidebarIcon
-              className={`mx-2 ${
-                isScrolled ? "h-8 w-8" : "h-10 w-10"
-              } text-black transition-all duration-300`}
-            />
-          </button>
+          <SidebarToggleButton isScrolled={isScrolled} />
           <Link href={"/"}>
             <img
               className={`${
