@@ -23,12 +23,11 @@ export default function ProductItem({
       transition={{ duration: 1, delay: index * 0.1 }}
     >
       <Link
-        key={product.id}
-        className="flex flex-col items-center border border-gray-200 rounded-lg p-4 transition-all shadow-md hover:border-gray-300 bg-white product-scroll-item relative product-scroll-item"
+        className="flex flex-col items-center border border-gray-200 rounded-lg p-2 transition-all shadow-md hover:border-gray-300 bg-white relative"
         href={"/products/" + product.id}
       >
         {product.images && product.images.length > 0 ? (
-          <div className="w-full h-64 relative overflow-hidden rounded-lg">
+          <div className="w-full aspect-square relative overflow-hidden rounded-lg">
             {product.originalPrice != -1 && (
               <div className="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded z-10 lg:text-sm">
                 {Math.round(
@@ -42,18 +41,18 @@ export default function ProductItem({
             <img
               src={getCloudinaryImageUrl(product.images[0], cldName)}
               alt={product.name}
-              className="w-full h-full object-contain absolute inset-0 duration-300 hover:scale-110 transition-all"
+              className="w-40 h-48 md:w-full md:h-full object-contain absolute inset-0 hover:scale-110 transition-transform duration-300"
             />
             {product.images[1] && (
               <img
                 src={getCloudinaryImageUrl(product.images[1], cldName)}
                 alt={product.name}
-                className="w-full h-full object-contain absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-300"
+                className="w-40 h-48 md:w-full md:h-full object-contain absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-300"
               />
             )}
           </div>
         ) : (
-          <div className="w-full h-64 bg-gray-200 flex items-center justify-center rounded-lg">
+          <div className="w-full aspect-square bg-gray-200 flex items-center justify-center rounded-lg">
             <span className="text-gray-500">No Image</span>
           </div>
         )}
