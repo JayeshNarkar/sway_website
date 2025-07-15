@@ -27,7 +27,7 @@ export default function ProductItem({
         href={"/products/" + product.id}
       >
         {product.images && product.images.length > 0 ? (
-          <div className="w-full aspect-square relative overflow-hidden rounded-lg">
+          <div className="w-full aspect-[4/5] relative overflow-hidden rounded-lg">
             {product.originalPrice != -1 && (
               <div className="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded z-10 lg:text-sm">
                 {Math.round(
@@ -41,13 +41,13 @@ export default function ProductItem({
             <img
               src={getCloudinaryImageUrl(product.images[0], cldName)}
               alt={product.name}
-              className="w-40 h-48 md:w-full md:h-full object-contain absolute inset-0 hover:scale-110 transition-transform duration-300"
+              className="w-full h-full object-contain absolute inset-0 hover:scale-110 transition-transform duration-300"
             />
             {product.images[1] && (
               <img
                 src={getCloudinaryImageUrl(product.images[1], cldName)}
                 alt={product.name}
-                className="w-40 h-48 md:w-full md:h-full object-contain absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-300"
+                className="w-full h-full object-contain absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-300"
               />
             )}
           </div>
