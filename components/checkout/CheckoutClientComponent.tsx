@@ -13,12 +13,10 @@ import { PaymentInformation } from "@prisma/client/edge";
 
 export default function CheckoutClientComponent({
   url,
-  upiId,
   orderId,
   paymentInformation,
 }: {
   url: string;
-  upiId: string;
   orderId: string;
   paymentInformation: PaymentInformation | null;
 }) {
@@ -55,7 +53,7 @@ export default function CheckoutClientComponent({
       setSavingQr(false);
     }
   };
-  console.log(paymentInformation);
+
   return (
     <>
       <span ref={upiQRRef}>
@@ -63,12 +61,6 @@ export default function CheckoutClientComponent({
         <div className="p-4 bg-white rounded border border-gray-300 mb-2 shadow-sm">
           <QRCode value={url} size={200} className="mx-auto" />
         </div>
-        <p className="text-gray-600 text-sm mb-6 text-center">
-          or send payment to: <br />
-          <span className="font-mono bg-gray-100 px-2 py-1 rounded">
-            {upiId}
-          </span>
-        </p>
       </span>
       <div className="flex flex-col w-full">
         <Button

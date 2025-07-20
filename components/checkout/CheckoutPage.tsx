@@ -55,7 +55,6 @@ export default function CheckoutPage({
         <div className="w-full lg:w-1/2 bg-white rounded-lg shadow-md p-6 flex flex-col items-center">
           <CheckoutClientComponent
             url={url}
-            upiId={upiId}
             orderId={order.id}
             paymentInformation={order.paymentInformation}
           />

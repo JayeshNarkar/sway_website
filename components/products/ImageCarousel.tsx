@@ -53,7 +53,7 @@ function ImageCarousel({ images, cldName }: ImageCarouselProps) {
         {images.map((image, index) => (
           <img
             key={image.url}
-            src={getCloudinaryImageUrl(image, cldName)}
+            src={getCloudinaryImageUrl(image, cldName, true)}
             alt={`Image ${index + 1}`}
             className={`self-center w-auto h-[440px] object-contain rounded-lg shadow-md transition-transform duration-300 lg:h-[550px] lg:w-auto ${
               index === currentImageIndex ? "block" : "hidden"

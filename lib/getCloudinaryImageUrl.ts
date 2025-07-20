@@ -1,16 +1,23 @@
 import { Image } from "@/lib/prisma";
 
-function getCloudinaryImageUrl(image: Image, cldName: string): string {
+function getCloudinaryImageUrl(
+  image: Image,
+  cldName: string,
+  productDisplayImage?: boolean
+): string {
   const baseUrl = `https://res.cloudinary.com/${cldName}/image/upload`;
 
-  let transformations = "q_auto,f_auto";
+  let transformations = productDisplayImage ? "" : "q_auto,f_auto";
 
   if (image.bgRemoval) {
-    transformations += ",e_background_removal";
+    transformations += (transformations ? "," : "") + "e_background_removal";
   }
 
-  const imageUrl = `${baseUrl}/${transformations}/${image.url}`;
+  const path = transformations ? `${transformations}/${image.url}` : image.url;
+
+  const imageUrl = `${baseUrl}/${path}`;
 
   return imageUrl;
 }
+
 export default getCloudinaryImageUrl;

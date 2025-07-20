@@ -1,4 +1,5 @@
 import BannerSlideShow from "@/components/homepage/BannerSlideShow";
+import CatalogueLinkClient from "@/components/homepage/CatalogueLinkClient";
 import Footer from "@/components/homepage/Footer";
 import { getBanners } from "@/components/homepage/getBanners";
 import getNewProducts from "@/components/homepage/getNewProducts";
@@ -14,6 +15,7 @@ async function Main() {
     <>
       <BannerSlideShow banners={banners} cldName={cldName} />
       <NewArrivals products={newProducts as Product[]} />
+      <CatalogueLinkClient />
       <Footer />
     </>
   );
