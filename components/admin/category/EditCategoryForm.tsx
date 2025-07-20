@@ -97,8 +97,8 @@ function EditCategoryForm({ category }: EditCategoryFormProps) {
   }
 
   return (
-    <div className="min-w-full p-4 border rounded-lg shadow-md bg-white">
-      <h2 className="mb-4 text-lg font-semibold">
+    <div className="min-w-full p-4 border rounded-lg shadow-md bg-white overflow-auto">
+      <h2 className="mb-4 text-lg font-semibold whitespace-nowrap">
         Edit Category: {category.name}
       </h2>
 

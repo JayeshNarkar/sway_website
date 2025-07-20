@@ -24,7 +24,7 @@ export default function ProductItem({
       transition={{ duration: 1, delay: index * 0.2 }}
     >
       <Link
-        className="flex flex-col items-center border border-gray-200 rounded-lg p-2 transition-all shadow-md hover:border-gray-300 bg-white relative"
+        className="flex flex-col items-center border border-gray-200 rounded-lg p-2 transition-all shadow-md hover:border-gray-300 relative bg-rose-300"
         href={"/products/" + product.id}
       >
         {product.images && product.images.length > 0 ? (
@@ -48,7 +48,7 @@ export default function ProductItem({
               <img
                 src={getCloudinaryImageUrl(product.images[1], cldName)}
                 alt={product.name}
-                className="w-full h-full object-contain absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-300"
+                className="w-full h-full object-contain absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-300 bg-rose-300"
               />
             )}
           </div>
@@ -70,7 +70,7 @@ export default function ProductItem({
               </p>
             </div>
           ) : (
-            <p className="text-lg text-gray-600">₹{product.price}</p>
+            <p className="text-lg text-gray-600 pb-2">₹{product.price}</p>
           )}
         </div>
       </Link>
