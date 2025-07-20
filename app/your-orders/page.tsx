@@ -34,7 +34,7 @@ async function YourOrders() {
     return <YourOrdersPage orders={orders} />;
   } else {
     return (
-      <div className="flex flex-col mt-[64px] mx-4 gap-4 text-center">
+      <div className="flex flex-col mt-[78.8px] mx-4 gap-4 text-center">
         <p className="text-xl">Hello, {session.user.name}</p>
         <p className="text-xl">You havent made any orders yet.</p>
         <p>

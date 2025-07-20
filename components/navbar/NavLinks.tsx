@@ -16,7 +16,7 @@ async function NavLinks() {
       }
     }
     if (!filteredNavItems.some((item) => item.url === "/your-orders")) {
-      filteredNavItems.splice(1, 0, {
+      filteredNavItems.splice(2, 0, {
         title: "Your Orders",
         url: "/your-orders",
         icon: Package,

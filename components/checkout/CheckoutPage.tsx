@@ -26,7 +26,7 @@ export default function CheckoutPage({
   const url = `upi://pay?pa=${upiId}&pn=SwayOrder&am=${order.totalPrice}&cu=INR`;
 
   return (
-    <div className="min-h-screen bg-gray-100 p-4 flex flex-col items-center pt-[64px]">
+    <div className="min-h-screen bg-gray-100 p-4 flex flex-col items-center pt-[78.8px]">
       <div className="w-full max-w-4xl bg-white rounded-lg shadow-md p-4 mb-6 border border-gray-200">
         <div className="flex flex-row md:flex-row justify-between items-center gap-4">
           <div className="flex items-center gap-4 w-full md:w-auto">

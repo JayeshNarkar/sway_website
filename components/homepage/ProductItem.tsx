@@ -52,12 +52,12 @@ export default function ProductItem({
             )}
           </div>
         ) : (
-          <div className="w-full aspect-square bg-gray-200 flex items-center justify-center rounded-lg">
+          <div className="w-full aspect-square lg:aspect-[3:4] bg-gray-200 flex items-center justify-center rounded-lg">
             <span className="text-gray-500">No Image</span>
           </div>
         )}
 
-        <div className="mt-4 text-center">
+        <div className="text-center">
           <p className="text-lg text-gray-800">{product.name}</p>
           {product.originalPrice !== -1 ? (
             <div className="flex items-center justify-center space-x-2">

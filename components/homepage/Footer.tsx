@@ -1,16 +1,12 @@
 import { Instagram, Mail } from "lucide-react";
+import FooterClientAnimated from "./FooterClientAnimated";
 
 function Footer() {
   return (
     <footer className="border-t-2 border-gray-500 w-full bg-gray-50 py-8">
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex flex-col items-center md:flex-row md:justify-between mb-6">
-          <div className="flex items-center">
-            <p className="p-4 font-bold jacquard text-3xl border-r-2 border-gray-500">
-              Sway
-            </p>
-            <p className="ml-4 text-gray-600 text-base">Wear The Chaos</p>
-          </div>
+          <FooterClientAnimated />
 
           <div className="flex space-x-6 mt-4 md:mt-0">
             <a

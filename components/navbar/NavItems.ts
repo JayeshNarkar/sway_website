@@ -1,4 +1,4 @@
-import { Home, Info, LucideProps, Mail } from "lucide-react";
+import { Home, Info, LayoutGrid, LucideProps, Mail } from "lucide-react";
 import { ForwardRefExoticComponent, RefAttributes } from "react";
 interface NavItem {
   title: string;
@@ -13,6 +13,11 @@ const items: NavItem[] = [
     title: "Home",
     url: "/",
     icon: Home,
+  },
+  {
+    title: "Catalogue",
+    url: "/catalogue",
+    icon: LayoutGrid,
   },
   {
     title: "About",

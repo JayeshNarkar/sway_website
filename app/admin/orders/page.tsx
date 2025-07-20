@@ -42,7 +42,7 @@ export default async function AdminOrdersPage() {
   );
 
   return (
-    <div className="w-full min-h-screen p-4 mt-[64px] space-y-8">
+    <div className="w-full min-h-screen p-4 mt-[78.8px] space-y-8">
       <section>
         <h2 className="text-xl font-semibold mb-4">
           Pending Orders ({pendingOrders.length})

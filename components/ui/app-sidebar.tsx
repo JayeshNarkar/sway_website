@@ -23,7 +23,7 @@ export function AppSidebar() {
         const updatedNavItems = [...navItems];
         if (session.user.isAdmin) {
           if (!updatedNavItems.some((item) => item.url === "/admin")) {
-            updatedNavItems.splice(1, 0, {
+            updatedNavItems.splice(2, 0, {
               title: "Admin",
               url: "/admin",
               icon: ShieldCheck,
@@ -31,7 +31,7 @@ export function AppSidebar() {
           }
         }
         if (!updatedNavItems.some((item) => item.url === "/your-orders")) {
-          updatedNavItems.splice(1, 0, {
+          updatedNavItems.splice(2, 0, {
             title: "Your Orders",
             url: "/your-orders",
             icon: Package,

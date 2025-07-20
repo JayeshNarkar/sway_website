@@ -11,13 +11,13 @@ async function ProductPage({ params }: { params: Promise<{ id: string }> }) {
   if (product) {
     addView(Number(id));
     return (
-      <div className="mt-[64px] min-w-full min-h-screen">
+      <div className="mt-[78.8px] min-w-full min-h-screen">
         <ProductView product={product as Product} cldName={cldName} />
       </div>
     );
   } else {
     return (
-      <div className="mt-[64px] min-w-full min-h-screen items-center text-center flex justify-center content-center">
+      <div className="mt-[78.8px] min-w-full min-h-screen items-center text-center flex justify-center content-center">
         Product Not found
       </div>
     );

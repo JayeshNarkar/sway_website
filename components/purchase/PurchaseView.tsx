@@ -45,7 +45,7 @@ export default async function PurchaseView({
   const totalPrice = (product?.price as number) + priceAdjustment;
 
   return (
-    <div className=" flex-1 w-full min-h-screen lg:px-0 flex flex-col lg:flex-row p-4 lg:p-0 pt-[64px] lg:pt-[57.6px]">
+    <div className=" flex-1 w-full min-h-screen lg:px-0 flex flex-col lg:flex-row p-4 lg:p-0 pt-[78.8px] lg:pt-[78.8px]">
       <div className="lg:w-1/2 lg:border-t-2 border-gray-300 order-2 lg:order-1 p-2 pt-4 lg:pt-2">
         <PurchaseForm
           productId={id}

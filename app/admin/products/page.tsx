@@ -11,7 +11,7 @@ import EditPromoCodePage from "@/components/admin/promocode/EditPromoCodePage";
 
 function Products() {
   return (
-    <div className="w-full h-full p-4 mt-[64px]">
+    <div className="w-full h-full p-4 mt-[78.8px]">
       <h1 className="text-xl font-bold mb-4">
         <span className="underline p-2">Admin Product Management</span>
       </h1>
