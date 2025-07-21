@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import { motion, PanInfo, useAnimation } from "framer-motion";
+import { motion, PanInfo } from "framer-motion";
 
 function BannerSlideShow({
   banners,
@@ -16,7 +16,6 @@ function BannerSlideShow({
 }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isDesktop, setIsDesktop] = useState(false);
-  const controls = useAnimation();
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
