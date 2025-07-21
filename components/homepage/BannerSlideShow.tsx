@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
+import { motion, PanInfo, useAnimation } from "framer-motion";
 
 function BannerSlideShow({
   banners,
@@ -14,10 +15,9 @@ function BannerSlideShow({
   cldName: string;
 }) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [startX, setStartX] = useState(0);
-  const [isDragging, setIsDragging] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
   const [isDesktop, setIsDesktop] = useState(false);
+  const controls = useAnimation();
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setIsDesktop(window.innerWidth >= 1024);
@@ -25,59 +25,46 @@ function BannerSlideShow({
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (!isDragging) {
-        setCurrentIndex((prevIndex) => (prevIndex + 1) % banners.length);
-      }
+      nextSlide();
     }, 5000);
     return () => clearInterval(interval);
-  }, [banners.length, isDragging]);
+  }, [currentIndex, banners.length]);
 
-  const handleTouchStart = (e: React.TouchEvent) => {
-    setStartX(e.touches[0].clientX);
-    setIsDragging(true);
+  const nextSlide = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % banners.length);
   };
 
-  const handleTouchMove = (e: React.TouchEvent) => {
-    if (!isDragging) return;
-    const currentX = e.touches[0].clientX;
-    const diff = startX - currentX;
+  const prevSlide = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? banners.length - 1 : prevIndex - 1
+    );
+  };
 
-    if (Math.abs(diff) > 50) {
-      if (diff > 0) {
-        setCurrentIndex((prevIndex) => (prevIndex + 1) % banners.length);
-      } else {
-        setCurrentIndex((prevIndex) =>
-          prevIndex === 0 ? banners.length - 1 : prevIndex - 1
-        );
-      }
-      setIsDragging(false);
+  const handleDragEnd = (
+    event: MouseEvent | TouchEvent | PointerEvent,
+    info: PanInfo
+  ) => {
+    const threshold = 50;
+    if (info.offset.x > threshold) {
+      prevSlide();
+    } else if (info.offset.x < -threshold) {
+      nextSlide();
     }
   };
 
-  const handleMouseDown = (e: React.MouseEvent) => {
-    setStartX(e.clientX);
-    setIsDragging(true);
-  };
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging) return;
-    const currentX = e.clientX;
-    const diff = startX - currentX;
-
-    if (Math.abs(diff) > 50) {
-      if (diff > 0) {
-        setCurrentIndex((prevIndex) => (prevIndex + 1) % banners.length);
-      } else {
-        setCurrentIndex((prevIndex) =>
-          prevIndex === 0 ? banners.length - 1 : prevIndex - 1
-        );
-      }
-      setIsDragging(false);
-    }
-  };
-
-  const handleMouseUp = () => {
-    setIsDragging(false);
+  const variants = {
+    enter: (direction: number) => ({
+      x: direction > 0 ? 1000 : -1000,
+      opacity: 0,
+    }),
+    center: {
+      x: 0,
+      opacity: 1,
+    },
+    exit: (direction: number) => ({
+      x: direction < 0 ? 1000 : -1000,
+      opacity: 0,
+    }),
   };
 
   if (banners.length === 0) {
@@ -88,33 +75,46 @@ function BannerSlideShow({
     <div
       ref={containerRef}
       className="relative w-full flex justify-center items-center overflow-hidden"
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
-      onMouseDown={handleMouseDown}
-      onMouseMove={handleMouseMove}
-      onMouseUp={handleMouseUp}
-      onMouseLeave={handleMouseUp}
     >
-      <a href={banners[currentIndex].url}>
-        <img
-          src={`https://res.cloudinary.com/${cldName}/image/upload/q_auto/f_auto/${
-            isDesktop
-              ? "c_pad,ar_16:5,g_center,b_gen_fill/"
-              : "c_pad,ar_4:5,g_center,b_gen_fill/"
-          }${banners[currentIndex].image.url}`}
-          alt={`Banner ${currentIndex + 1}`}
-          className="max-w-full max-h-full object-contain"
-        />
-      </a>
+      <motion.div
+        key={currentIndex}
+        custom={1}
+        initial="enter"
+        animate="center"
+        exit="exit"
+        variants={variants}
+        transition={{
+          x: { type: "spring", stiffness: 300, damping: 30 },
+          opacity: { duration: 0.2 },
+        }}
+        drag="x"
+        dragConstraints={{ left: 0, right: 0 }}
+        onDragEnd={handleDragEnd}
+        className="w-full"
+      >
+        <a href={banners[currentIndex].url} className="block w-full">
+          <motion.img
+            src={`https://res.cloudinary.com/${cldName}/image/upload/q_auto/f_auto/${
+              isDesktop
+                ? "c_pad,ar_16:5,g_center,b_gen_fill/"
+                : "c_pad,ar_4:5,g_center,b_gen_fill/"
+            }${banners[currentIndex].image.url}`}
+            alt={`Banner ${currentIndex + 1}`}
+            className="w-full h-auto object-contain"
+          />
+        </a>
+      </motion.div>
 
       <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
         {banners.map((_, index) => (
-          <div
+          <motion.div
             key={index}
             className={`w-3 h-3 rounded-full ${
               index === currentIndex ? "bg-white" : "bg-gray-400"
             }`}
-          ></div>
+            whileHover={{ scale: 1.2 }}
+            onClick={() => setCurrentIndex(index)}
+          />
         ))}
       </div>
     </div>

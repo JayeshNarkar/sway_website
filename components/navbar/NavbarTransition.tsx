@@ -33,7 +33,7 @@ function NavbarTransition({
       <div
         className={`transition-all duration-300 ${
           isScrolled
-            ? "py-1 bg-rose-200 border-b-2 border-gray-600"
+            ? "py-1 bg-gradient-to-t from-rose-300 via-pink-400 to-purple-500 border-b-2 border-gray-600"
             : "py-2 text-white"
         } fixed top-0 w-full z-50 flex justify-between items-center`}
       >

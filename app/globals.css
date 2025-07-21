@@ -107,3 +107,19 @@ body {
 .iceberg {
   font-family: "Iceberg", sans-serif;
 }
+
+:root {
+  --deep-pink: #e6007e;
+}
+
+@keyframes slide {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+.animate-slide {
+  animation: slide 20s linear infinite;
+}

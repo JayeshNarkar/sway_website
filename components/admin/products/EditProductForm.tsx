@@ -48,7 +48,6 @@ function EditProductForm({ product, cldName }: EditProductFormProps) {
 
   const router = useRouter();
 
-  // Fetch categories on component mount
   useEffect(() => {
     async function fetchCategories() {
       try {

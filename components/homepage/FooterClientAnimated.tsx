@@ -1,4 +1,4 @@
-"use client"; // Required for client-side animations in Next.js
+"use client";
 
 import { motion } from "framer-motion";
 
@@ -17,7 +17,7 @@ export default function AnimatedHeader() {
         initial={{ opacity: 0, x: -10 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 1.3, duration: 0.5 }}
-        className="ml-4 text-gray-600 text-base"
+        className="ml-4 text-white text-base"
       >
         Wear The Chaos
       </motion.p>

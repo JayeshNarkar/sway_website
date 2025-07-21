@@ -5,7 +5,7 @@ import { ArrowRight } from "lucide-react";
 
 const CatalogueLink = () => {
   return (
-    <div className="bg-gray-50 overflow-hidden">
+    <div className="overflow-hidden">
       <motion.div
         initial={{ opacity: 0, x: -20 }}
         whileInView={{ opacity: 1, x: 0 }}
@@ -21,7 +21,7 @@ const CatalogueLink = () => {
             }}
             whileTap={{ scale: 0.98 }}
           >
-            <motion.p className="text-md md:text-lg lg:text-xl text-gray-600 hover:text-gray-800 transition-all cursor-pointer font-medium group-hover:font-semibold whitespace-normal">
+            <motion.p className="text-md md:text-lg lg:text-xl text-gray-600 hover:text-gray-700 transition-all cursor-pointer font-medium group-hover:font-semibold whitespace-normal">
               Browse the rest of our catalogue
             </motion.p>
             <motion.div
@@ -41,7 +41,7 @@ const CatalogueLink = () => {
               }}
             >
               <ArrowRight
-                className="h-5 w-5 text-gray-600 group-hover:text-gray-800 transition-colors"
+                className="h-5 w-5 text-gray-600 group-hover:text-gray-700 transition-colors"
                 strokeWidth={2.5}
               />
             </motion.div>
