@@ -131,6 +131,7 @@ model Order {
   contactId Int
   promoCodeId Int?  
   paymentInformationId Int?
+  deliveryInformationId Int?
 
   totalPrice Int 
 
@@ -143,6 +144,7 @@ model Order {
   address Address @relation(fields: [addressId], references: [id] )
   promoCode PromoCode? @relation(fields: [promoCodeId], references: [id])
   paymentInformation PaymentInformation? @relation(fields: [paymentInformationId], references: [id])
+  deliveryInformation DeliveryInformation? @relation(fields: [deliveryInformationId], references: [id])
   size Size @relation(fields: [sizeId], references: [id])
   user        User    @relation(fields: [userId], references: [id])
   product     Product @relation(fields: [productId], references: [id])
@@ -151,11 +153,21 @@ model Order {
 model PaymentInformation {
   id          Int      @id @default(autoincrement())
   userId      Int
-  upiId       String?   // Customer's UPI ID (e.g. "user@upi")
-  txnId       String?  // Optional transaction ID (for successful payments)
+  upiId       String?   
+  txnId       String?
   
   orders      Order[]  
   user        User    @relation(fields: [userId], references: [id])
+}
+
+model DeliveryInformation {
+  id          Int      @id @default(autoincrement())
+  trackingNumber String
+  carrier        String   @default("India Post")
+  dispatchedAt   DateTime?
+  deliveredAt   DateTime?
+
+  orders      Order[]  
 }
 
 enum OrderStatus {

@@ -1,5 +1,5 @@
 import { Product } from "@/lib/prisma";
-import ProductItem from "./ProductItem";
+import ProductItem from "@/components/homepage/ProductItem";
 import TextAnimated from "@/components/homepage/TextAnimatedAppear";
 import CatalogueLinkClient from "@/components/homepage/CatalogueLinkClient";
 

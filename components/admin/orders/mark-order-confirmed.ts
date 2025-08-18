@@ -7,7 +7,8 @@ import { revalidatePath } from "next/cache";
 export async function markOrderConfirmed(
   txnId: string,
   paymentInformationId: number | null,
-  orderId: string
+  orderId: string,
+  trackingNumber: string
 ) {
   try {
     if (!paymentInformationId) {
@@ -22,6 +23,12 @@ export async function markOrderConfirmed(
       );
     }
 
+    if (!trackingNumber?.trim() || trackingNumber.trim().length <= 5) {
+      throw new Error(
+        "A valid tracking number (minimum 6 characters) is required"
+      );
+    }
+
     const result = await prisma.$transaction(async (prisma) => {
       const paymentInfo = await prisma.paymentInformation.update({
         where: { id: paymentInformationId },
@@ -29,9 +36,18 @@ export async function markOrderConfirmed(
         include: { user: true },
       });
 
+      const deliveryInformation = await prisma.deliveryInformation.create({
+        data: {
+          trackingNumber,
+        },
+      });
+
       const order = await prisma.order.update({
         where: { id: orderId },
-        data: { status: "confirmed" },
+        data: {
+          status: "confirmed",
+          deliveryInformationId: deliveryInformation.id,
+        },
         include: {
           product: true,
           size: true,

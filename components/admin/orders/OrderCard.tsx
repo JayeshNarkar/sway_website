@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { markOrderConfirmed } from "@/components/admin/orders/mark-order-confirmed";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertCircleIcon, CheckCircle2Icon } from "lucide-react";
+import DeleteOrderButton from "@/components/admin/orders/DeleteOrderButton";
 
 type OrderWithProductAndSizeAndPaymentInformation = Prisma.OrderGetPayload<{
   where: {
@@ -24,6 +25,7 @@ type OrderWithProductAndSizeAndPaymentInformation = Prisma.OrderGetPayload<{
         images: true;
       };
     };
+    deliveryInformation: true;
     address: true;
     user: true;
     paymentInformation: true;
@@ -51,8 +53,10 @@ export default function OrderCard({
   const date = new Date(order.orderedAt);
 
   const [txnID, setTxnID] = useState<string>("");
+  const [trackingNo, setTrackingNo] = useState<string>("");
+
   const [response, SetResponse] = useState<
-    { message: string } | true | undefined
+    { success: boolean; message: string } | true | undefined
   >();
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -70,6 +74,7 @@ export default function OrderCard({
           {date.getDate()}/{date.getMonth() + 1}/{date.getFullYear()}{" "}
           {date.toLocaleTimeString()}
         </div>
+        <DeleteOrderButton orderId={order.id} />
       </div>
 
       <div className="flex gap-4 items-center">
@@ -105,13 +110,26 @@ export default function OrderCard({
             {order.paymentInformation.upiId}
           </p>
         )}
-        <strong className="text-base text-gray-800">
-          Order&apos;s Transaction ID:
-        </strong>
         {order.paymentInformation?.txnId && (
-          <p className="text-sm text-gray-600  whitespace-nowrap">
-            {order.paymentInformation.txnId}
-          </p>
+          <>
+            <strong className="text-base text-gray-800">
+              Order&apos;s Transaction ID:
+            </strong>
+            <p className="text-sm text-gray-600  whitespace-nowrap">
+              {order.paymentInformation.txnId}
+            </p>
+          </>
+        )}
+        {order.deliveryInformationId && (
+          <>
+            <strong className="text-base text-gray-800">
+              Order&apos;s Tracking Number:
+            </strong>
+            <p className="text-sm text-gray-600  whitespace-nowrap">
+              {order.deliveryInformation &&
+                order.deliveryInformation.trackingNumber}
+            </p>
+          </>
         )}
         {order.promoCode && (
           <>
@@ -129,12 +147,25 @@ export default function OrderCard({
           </strong>
           <Input
             id="txnId"
-            className="mb-2"
-            placeholder="FMPIB2711679949"
+            placeholder="559298055234"
             required
             value={txnID}
             onChange={(e) => {
               setTxnID(e.target.value);
+            }}
+            disabled={loading}
+          />
+          <strong className="text-base text-gray-800 mb-2">
+            Enter Tracking Number:
+          </strong>
+          <Input
+            id="trackingNo"
+            className="mb-2"
+            placeholder="CE084850295IN"
+            required
+            value={trackingNo}
+            onChange={(e) => {
+              setTrackingNo(e.target.value);
             }}
             disabled={loading}
           />
@@ -148,7 +179,8 @@ export default function OrderCard({
                 await markOrderConfirmed(
                   txnID,
                   order.paymentInformationId,
-                  order.id
+                  order.id,
+                  trackingNo
                 )
               );
               setLoading(false);
@@ -158,7 +190,11 @@ export default function OrderCard({
           </Button>
           {response && (
             <Alert
-              variant={response == true ? "default" : "destructive"}
+              variant={
+                response && response != true && response?.success == true
+                  ? "default"
+                  : "destructive"
+              }
               className="mt-2"
             >
               {response == true ? (

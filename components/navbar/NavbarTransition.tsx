@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/ui/app-sidebar";
 import Link from "next/link";
-import SidebarToggleButton from "./SidebarToggleButton";
+import SidebarToggleButton from "@/components/navbar/SidebarToggleButton";
 
 function NavbarTransition({
   children,

@@ -1,11 +1,15 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
-import { motion, PanInfo } from "framer-motion";
+import * as React from "react";
+import {
+  Carousel,
+  CarouselApi,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
-function BannerSlideShow({
-  banners,
-  cldName,
-}: {
+type BannerSlideShowProps = {
   banners: {
     image: {
       url: string;
@@ -13,111 +17,79 @@ function BannerSlideShow({
     url: string;
   }[];
   cldName: string;
-}) {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isDesktop, setIsDesktop] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
+};
 
-  useEffect(() => {
+const BannerSlideShow: React.FC<BannerSlideShowProps> = ({
+  banners,
+  cldName,
+}) => {
+  const [api, setApi] = React.useState<CarouselApi>();
+  const [current, setCurrent] = React.useState(0);
+  const [count, setCount] = React.useState(0);
+
+  const [isDesktop, setIsDesktop] = React.useState(false);
+
+  React.useEffect(() => {
     setIsDesktop(window.innerWidth >= 1024);
   }, []);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      nextSlide();
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [currentIndex, banners.length]);
-
-  const nextSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % banners.length);
-  };
-
-  const prevSlide = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? banners.length - 1 : prevIndex - 1
-    );
-  };
-
-  const handleDragEnd = (
-    event: MouseEvent | TouchEvent | PointerEvent,
-    info: PanInfo
-  ) => {
-    const threshold = 50;
-    if (info.offset.x > threshold) {
-      prevSlide();
-    } else if (info.offset.x < -threshold) {
-      nextSlide();
-    }
-  };
-
-  const variants = {
-    enter: (direction: number) => ({
-      x: direction > 0 ? 1000 : -1000,
-      opacity: 0,
-    }),
-    center: {
-      x: 0,
-      opacity: 1,
-    },
-    exit: (direction: number) => ({
-      x: direction < 0 ? 1000 : -1000,
-      opacity: 0,
-    }),
-  };
-
-  if (banners.length === 0) {
+  if (!banners || banners.length === 0) {
     return <div>No banners available</div>;
   }
 
-  return (
-    <div
-      ref={containerRef}
-      className="relative w-full flex justify-center items-center overflow-hidden"
-    >
-      <motion.div
-        key={currentIndex}
-        custom={1}
-        initial="enter"
-        animate="center"
-        exit="exit"
-        variants={variants}
-        transition={{
-          x: { type: "spring", stiffness: 300, damping: 30 },
-          opacity: { duration: 0.2 },
-        }}
-        drag="x"
-        dragConstraints={{ left: 0, right: 0 }}
-        onDragEnd={handleDragEnd}
-        className="w-full"
-      >
-        <a href={banners[currentIndex].url} className="block w-full">
-          <motion.img
-            src={`https://res.cloudinary.com/${cldName}/image/upload/q_auto/f_auto/${
-              isDesktop
-                ? "c_pad,ar_16:5,g_center,b_gen_fill/"
-                : "c_pad,ar_4:5,g_center,b_gen_fill/"
-            }${banners[currentIndex].image.url}`}
-            alt={`Banner ${currentIndex + 1}`}
-            className="w-full h-auto object-contain"
-          />
-        </a>
-      </motion.div>
+  React.useEffect(() => {
+    if (!api) {
+      return;
+    }
 
-      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-        {banners.map((_, index) => (
-          <motion.div
+    setCount(api.scrollSnapList().length);
+    setCurrent(api.selectedScrollSnap() + 1);
+
+    api.on("select", () => {
+      setCurrent(api.selectedScrollSnap() + 1);
+    });
+  }, [api]);
+
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      api?.scrollNext();
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [current, banners.length]);
+
+  return (
+    <Carousel
+      setApi={setApi}
+      className="w-full"
+      opts={{
+        align: "start",
+        loop: true,
+      }}
+    >
+      <CarouselContent>
+        {banners.map((banner, index) => (
+          <CarouselItem
             key={index}
-            className={`w-3 h-3 rounded-full ${
-              index === currentIndex ? "bg-white" : "bg-gray-400"
-            }`}
-            whileHover={{ scale: 1.2 }}
-            onClick={() => setCurrentIndex(index)}
-          />
+            className="flex justify-center items-center pl-0"
+          >
+            <a href={banner.url} className="block w-full">
+              <img
+                src={`https://res.cloudinary.com/${cldName}/image/upload/q_auto/f_auto/${
+                  isDesktop
+                    ? "c_pad,ar_16:5,g_center,b_gen_fill/"
+                    : "c_pad,ar_4:5,g_center,b_gen_fill/"
+                }${banner.image.url}`}
+                alt={`Banner ${index + 1}`}
+                className="w-full h-auto object-contain"
+              />
+            </a>
+          </CarouselItem>
         ))}
-      </div>
-    </div>
+      </CarouselContent>
+      {/* <CarouselPrevious />
+      <CarouselNext /> */}
+    </Carousel>
   );
-}
+};
 
 export default BannerSlideShow;

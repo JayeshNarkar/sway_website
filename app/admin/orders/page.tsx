@@ -16,6 +16,7 @@ export default async function AdminOrdersPage() {
           images: true,
         },
       },
+      deliveryInformation: true,
       address: true,
       user: true,
       paymentInformation: true,
