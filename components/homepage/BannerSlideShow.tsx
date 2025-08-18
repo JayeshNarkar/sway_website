@@ -5,8 +5,6 @@ import {
   CarouselApi,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "@/components/ui/carousel";
 
 type BannerSlideShowProps = {
@@ -33,10 +31,6 @@ const BannerSlideShow: React.FC<BannerSlideShowProps> = ({
     setIsDesktop(window.innerWidth >= 1024);
   }, []);
 
-  if (!banners || banners.length === 0) {
-    return <div>No banners available</div>;
-  }
-
   React.useEffect(() => {
     if (!api) {
       return;
@@ -55,7 +49,11 @@ const BannerSlideShow: React.FC<BannerSlideShowProps> = ({
       api?.scrollNext();
     }, 5000);
     return () => clearInterval(interval);
-  }, [current, banners.length]);
+  }, [api, current, banners.length]);
+
+  if (!banners || banners.length === 0) {
+    return <div>{count}No banners available</div>;
+  }
 
   return (
     <Carousel
