@@ -7,7 +7,7 @@ export default async function SiteSettings() {
   });
 
   return (
-    <div className="w-full min-h-screen mt-[78.8px] p-4">
+    <div className="w-full min-h-screen pt-[78.8px] p-4">
       <h2 className="text-xl font-semibold mb-4">
         Set Website Launch Date and Time
       </h2>

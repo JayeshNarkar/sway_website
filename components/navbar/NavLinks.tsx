@@ -42,7 +42,10 @@ async function NavLinks() {
     <div className="hidden md:block">
       {NavItems.map((item) => (
         <Link key={item.title} href={item.url}>
-          <Button variant={"link"} className="hover:no-underline">
+          <Button
+            variant={"link"}
+            className="font-semibold hover:no-underline text-gray-800"
+          >
             <AnimatedTextUnderline text={item.title} />
           </Button>
         </Link>

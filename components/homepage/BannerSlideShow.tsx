@@ -1,11 +1,11 @@
 "use client";
-import * as React from "react";
 import {
   Carousel,
   CarouselApi,
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
+import { useState, useEffect } from "react";
 
 type BannerSlideShowProps = {
   banners: {
@@ -17,21 +17,33 @@ type BannerSlideShowProps = {
   cldName: string;
 };
 
-const BannerSlideShow: React.FC<BannerSlideShowProps> = ({
+export default function BannerSlideShow({
   banners,
   cldName,
-}) => {
-  const [api, setApi] = React.useState<CarouselApi>();
-  const [current, setCurrent] = React.useState(0);
-  const [count, setCount] = React.useState(0);
+}: BannerSlideShowProps) {
+  const [api, setApi] = useState<CarouselApi>();
+  const [current, setCurrent] = useState(0);
+  const [count, setCount] = useState(0);
+  const [isDesktop, setIsDesktop] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const [isDesktop, setIsDesktop] = React.useState(false);
-
-  React.useEffect(() => {
+  useEffect(() => {
+    // Set initial screen size
     setIsDesktop(window.innerWidth >= 1024);
+
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 1024);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    // Mark loading as complete after initial setup
+    setIsLoading(false);
+
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!api) {
       return;
     }
@@ -44,7 +56,7 @@ const BannerSlideShow: React.FC<BannerSlideShowProps> = ({
     });
   }, [api]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const interval = setInterval(() => {
       api?.scrollNext();
     }, 5000);
@@ -52,10 +64,14 @@ const BannerSlideShow: React.FC<BannerSlideShowProps> = ({
   }, [api, current, banners.length]);
 
   if (!banners || banners.length === 0) {
-    return <div>{count}No banners available</div>;
+    return <div>No banners available</div>;
   }
 
-  return (
+  return isLoading ? (
+    <div className="w-full lg:aspect-[16/5] aspect-[4/5] bg-gray-200 animate-pulse rounded-lg flex items-center justify-center">
+      <p className="font-bold text-xl">Loading...</p>
+    </div>
+  ) : (
     <Carousel
       setApi={setApi}
       className="w-full"
@@ -84,10 +100,6 @@ const BannerSlideShow: React.FC<BannerSlideShowProps> = ({
           </CarouselItem>
         ))}
       </CarouselContent>
-      {/* <CarouselPrevious />
-      <CarouselNext /> */}
     </Carousel>
   );
-};
-
-export default BannerSlideShow;
+}

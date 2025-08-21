@@ -7,7 +7,7 @@ export default function DiscountSlideShow() {
         <div className="absolute inset-y-0 left-0 w-full flex items-center">
           <div className="animate-slide whitespace-nowrap text-2xl font-bold">
             <span className="text-black bg-white px-4 py-2 mx-2 rounded-lg">
-              HOT DEAL!
+              HOT DEALS!
             </span>
             <span className="text-white bg-gray-800 px-4 py-2 mx-2 rounded-lg">
               LIMITED TIME OFFER
@@ -20,7 +20,7 @@ export default function DiscountSlideShow() {
             </span>
 
             <span className="text-black bg-white px-4 py-2 mx-2 rounded-lg">
-              HOT DEAL!
+              HOT DEALS!
             </span>
             <span className="text-white bg-gray-800 px-4 py-2 mx-2 rounded-lg">
               LIMITED TIME OFFER

@@ -8,7 +8,7 @@ async function UserStatus() {
   const session = await getServerSession(authOptions);
   if (session)
     return (
-      <Link href={"/profile"}>
+      <Link href={"/logout"}>
         <Image
           src={session?.user?.image as string}
           alt="User Image"

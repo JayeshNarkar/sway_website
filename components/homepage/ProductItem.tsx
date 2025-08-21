@@ -63,7 +63,7 @@ export default function ProductItem({
         )}
 
         <div className="text-center">
-          <p className="text-lg text-gray-800">{product.name}</p>
+          <p className="text-lg text-gray-800 font-bold">{product.name}</p>
           {product.originalPrice !== -1 ? (
             <div className="flex items-center justify-center space-x-2">
               <p className="text-lg text-gray-600 font-semibold">
@@ -74,7 +74,9 @@ export default function ProductItem({
               </p>
             </div>
           ) : (
-            <p className="text-lg text-gray-600 pb-2">₹{product.price}</p>
+            <p className="text-lg text-gray-600 font-semibold pb-2">
+              ₹{product.price}
+            </p>
           )}
         </div>
       </Link>
