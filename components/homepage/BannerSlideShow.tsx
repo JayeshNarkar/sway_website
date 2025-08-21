@@ -64,7 +64,7 @@ export default function BannerSlideShow({
   }, [api, current, banners.length]);
 
   if (!banners || banners.length === 0) {
-    return <div>No banners available</div>;
+    return <div>No banners available {count}</div>;
   }
 
   return isLoading ? (
