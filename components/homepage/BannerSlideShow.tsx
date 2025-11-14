@@ -28,7 +28,6 @@ export default function BannerSlideShow({
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Set initial screen size
     setIsDesktop(window.innerWidth >= 1024);
 
     const handleResize = () => {
@@ -37,7 +36,6 @@ export default function BannerSlideShow({
 
     window.addEventListener("resize", handleResize);
 
-    // Mark loading as complete after initial setup
     setIsLoading(false);
 
     return () => window.removeEventListener("resize", handleResize);

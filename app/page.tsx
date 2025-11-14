@@ -1,5 +1,5 @@
+import AnnouncementBar from "@/components/homepage/AnnouncementBar";
 import BannerSlideShow from "@/components/homepage/BannerSlideShow";
-import DiscountSlideShow from "@/components/homepage/DiscountSlideShow";
 import Footer from "@/components/homepage/Footer";
 import { getBanners } from "@/components/homepage/getBanners";
 import getNewProducts from "@/components/homepage/getNewProducts";
@@ -13,10 +13,16 @@ async function Main() {
   const newProducts = await getNewProducts();
   return (
     <>
-      <DiscountSlideShow />
+      <AnnouncementBar
+        messages={[
+          "🎉 Free shipping on orders over $50!",
+          "🔥 Hot deals: Up to 40% off selected items",
+          "⭐ New collection just dropped - shop now!",
+          "🚚 Same-day delivery available in selected areas",
+        ]}
+      />
       <BannerSlideShow banners={banners} cldName={cldName} />
       <NewArrivals products={newProducts as Product[]} />
-
       <Footer />
     </>
   );
