@@ -203,3 +203,10 @@ model WebsiteLaunch{
   launchAt    DateTime
   timezone    String?  @default("Asia/Kolkata")
 }
+
+model AnnouncementMessage{
+  id Int @id @default(autoincrement())
+  message String
+  sortOrder  Int      @default(0)
+  createdAt  DateTime @default(now())
+}

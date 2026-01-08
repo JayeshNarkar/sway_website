@@ -139,3 +139,10 @@ export type User = {
   addresses?: Address[];
   contact?: Contact[];
 };
+
+export type AnnouncementMessage = {
+  id: number;
+  message: string;
+  sortOrder: number;
+  createdAt: Date;
+};
