@@ -100,7 +100,6 @@ export default function AnnouncementMessageEdit({
         </div>
       </div>
 
-      {/* Drag and Drop List */}
       <DragDropContext onDragEnd={handleDragEnd}>
         <Droppable droppableId="announcements">
           {(provided) => (
@@ -121,7 +120,6 @@ export default function AnnouncementMessageEdit({
                       {...provided.draggableProps}
                       className="flex items-start bg-white border rounded-lg p-4"
                     >
-                      {/* Drag Handle */}
                       <div
                         {...provided.dragHandleProps}
                         className="mr-4 mt-2 cursor-move text-gray-400"
@@ -129,7 +127,6 @@ export default function AnnouncementMessageEdit({
                         ⋮⋮
                       </div>
 
-                      {/* Content */}
                       <div className="flex-1">
                         <div className="flex items-center justify-between mb-2">
                           <Input
@@ -175,7 +172,6 @@ export default function AnnouncementMessageEdit({
         </Droppable>
       </DragDropContext>
 
-      {/* Add New Message */}
       <div className="bg-gray-50 border rounded-lg p-4 mb-6">
         <h3 className="font-semibold mb-3">Add New Message</h3>
         <textarea
@@ -204,7 +200,6 @@ export default function AnnouncementMessageEdit({
         </div>
       </div>
 
-      {/* Actions */}
       <div className="flex justify-end space-x-3">
         <button
           disabled={loading}

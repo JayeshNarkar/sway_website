@@ -15,11 +15,11 @@ function ImageCarousel({ images, cldName }: ImageCarouselProps) {
   const handleSwipe = (direction: "left" | "right") => {
     if (direction === "left") {
       setCurrentImageIndex((prevIndex) =>
-        prevIndex < images.length - 1 ? prevIndex + 1 : prevIndex
+        prevIndex < images.length - 1 ? prevIndex + 1 : 0
       );
     } else if (direction === "right") {
       setCurrentImageIndex((prevIndex) =>
-        prevIndex > 0 ? prevIndex - 1 : prevIndex
+        prevIndex > 0 ? prevIndex - 1 : images.length - 1
       );
     }
   };
@@ -55,7 +55,7 @@ function ImageCarousel({ images, cldName }: ImageCarouselProps) {
             key={image.url}
             src={getCloudinaryImageUrl(image, cldName, true)}
             alt={`Image ${index + 1}`}
-            className={`self-center w-auto h-[440px] object-contain rounded-lg shadow-md transition-transform duration-300 lg:h-[550px] lg:w-auto ${
+            className={`self-center w-auto h-[440px] object-contain rounded-lg transition-transform duration-300 lg:h-[550px] lg:w-auto ${
               index === currentImageIndex ? "block" : "hidden"
             }`}
           />

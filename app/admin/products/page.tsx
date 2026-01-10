@@ -1,3 +1,4 @@
+"use server";
 import AddBannerForm from "@/components/admin/banner/AddBannerForm";
 import EditBannersPage from "@/components/admin/banner/EditBannersPage";
 import EditProductPage from "@/components/admin/products/EditProductPage";
@@ -8,6 +9,7 @@ import EditCategoryPage from "@/components/admin/category/EditCategoryPage";
 import EditProductStock from "@/components/admin/productStock/EditProductStock";
 import AddPromoCodeForm from "@/components/admin/promocode/AddPromoCodeForm";
 import EditPromoCodePage from "@/components/admin/promocode/EditPromoCodePage";
+import EditCategoryInfoForm from "@/components/admin/category/editCategoryInfoForm";
 
 function Products() {
   return (
@@ -27,6 +29,15 @@ function Products() {
           <h2 className="text-xl font-semibold mb-2">Edit Categories</h2>
           <div className="bg-gray-100 p-4 flex items-center justify-center flex-col rounded">
             <EditCategoryPage />
+          </div>
+        </div>
+
+        <div className="p-4 border rounded shadow">
+          <h2 className="text-xl font-semibold mb-2">
+            Edit Category Description
+          </h2>
+          <div className="bg-gray-100 flex items-center rounded justify-center">
+            <EditCategoryInfoForm />
           </div>
         </div>
 
@@ -80,12 +91,6 @@ function Products() {
           <h2 className="text-xl font-semibold mb-2">Top Viewed Product</h2>
           <div className="bg-gray-100 flex items-center rounded justify-center">
             <ProductViewsPage />
-          </div>
-        </div>
-        <div className="p-4 border rounded shadow">
-          <h2 className="text-xl font-semibold mb-2">Top Purchased Product</h2>
-          <div className="bg-gray-100 flex items-center rounded justify-center">
-            Top Purchased Product Data
           </div>
         </div>
       </div>

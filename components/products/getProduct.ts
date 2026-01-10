@@ -14,6 +14,7 @@ async function getProduct(id: number) {
             size: true,
           },
         },
+        category: true,
       },
     });
     return product;
