@@ -53,7 +53,7 @@ export default function AnnouncementBar({
                     key={item.id}
                     className={`${
                       index === currentIndex ? "block" : "hidden"
-                    } min-h-6 flex items-center justify-center text-md sm:text-sm font-semibold tracking-wide px-2`}
+                    } min-h-6 flex items-center justify-center text-xs sm:text-sm font-bold tracking-wide px-2`}
                   >
                     <span className="drop-shadow-lg">
                       {item.message.split(/(\p{Emoji})/u).map((char, i) =>
