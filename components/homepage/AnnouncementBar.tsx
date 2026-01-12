@@ -12,7 +12,7 @@ interface AnnouncementBarProps {
 export default function AnnouncementBar({
   messages,
   autoScroll = true,
-  scrollInterval = 3000,
+  scrollInterval = 5000,
 }: AnnouncementBarProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -53,9 +53,22 @@ export default function AnnouncementBar({
                     key={item.id}
                     className={`${
                       index === currentIndex ? "block" : "hidden"
-                    } min-h-6 flex items-center justify-center text-xs sm:text-sm font-medium tracking-wide px-2`}
+                    } min-h-6 flex items-center justify-center text-md sm:text-sm font-semibold tracking-wide px-2`}
                   >
-                    {item.message}
+                    <span className="drop-shadow-lg">
+                      {item.message.split(/(\p{Emoji})/u).map((char, i) =>
+                        /\p{Emoji}/u.test(char) ? (
+                          <span key={i}>{char}</span>
+                        ) : (
+                          <span
+                            key={i}
+                            className="bg-gradient-to-r from-rose-400 via-pink-500 to-purple-600 bg-clip-text text-transparent"
+                          >
+                            {char}
+                          </span>
+                        )
+                      )}
+                    </span>
                   </div>
                 ))}
               </div>
