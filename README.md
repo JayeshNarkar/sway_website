@@ -1,6 +1,69 @@
 # sway_website
 
-## Step 1: Install Dependencies
+## Technologies used
+
+### Frontend
+
+- **Next.js 15** - React framework for production
+- **React 18** - UI library
+- **TypeScript** - Type safety
+- **Tailwind CSS** - Utility-first CSS framework
+- **Radix UI** - Unstyled, accessible component library
+- **Framer Motion** - Animation library
+- **Lucide React** - Icon library
+- **React Hook Form** - Efficient form handling
+- **Zod** - TypeScript-first schema validation
+- **Next Auth** - Authentication solution
+- **html-to-image** - Convert HTML elements to images
+- **react-qr-code** - QR code generation
+- **react-loader-spinner** - Loading indicators
+
+### Backend & Database
+
+- **Prisma** - ORM and database toolkit
+- **Prisma Accelerate** - Connection pooling and caching
+- **Nodemailer** - Email sending
+
+### Cloud & Storage
+
+- **Cloudinary** - Image and video management
+- **Next Cloudinary** - Cloudinary integration for Next.js
+
+### Development Tools
+
+- **ESLint** - Code linting
+- **TSX** - TypeScript execution
+- **PostCSS** - CSS processing
+
+### Additional Libraries
+
+- **@hello-pangea/dnd** - Drag and drop functionality
+
+## Preview
+
+### /homepage
+
+![Homepage Image](/screenshots/homepage.png)
+
+### /catalogue
+
+![Catalogue Image](/screenshots/catalogue.png)
+
+### /admin/products
+
+![Admin Products Page Image](/screenshots/admin_products.png)
+
+### /admin/orders
+
+![Admin orders Page Image](/screenshots/admin_orders.png)
+
+### /admin/site-settings
+
+![Site Settings Image](/screenshots/admin_website.png)
+
+## Setup
+
+### Step 1: Install Dependencies
 
 First, install the required npm packages:
 
@@ -14,7 +77,7 @@ pnpm install
 bun install
 ```
 
-## Step 2: Add Environment Variables
+### Step 2: Add Environment Variables
 
 Create a .env file in the root of your project and add the following variables:
 
@@ -35,7 +98,7 @@ CLOUDINARY_API_SECRET=your_cloudinary_api_secret
 
 Replace the placeholders (your\_...) with the actual values for your project.
 
-## Step 3: Set Up Prisma
+### Step 3: Set Up Prisma
 
 Run the following commands to set up Prisma:
 
@@ -51,7 +114,7 @@ Push the Prisma Schema to the Database:
 npx prisma db push
 ```
 
-## Step 4: Run the Application
+### Step 4: Run the Application
 
 Development Mode
 To run the application in development mode, use:
